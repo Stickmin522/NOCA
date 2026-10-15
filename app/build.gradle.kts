@@ -43,6 +43,8 @@ android {
                 storePassword = releaseSigning.getValue("NOCA_KEYSTORE_PASSWORD")
                 keyAlias = releaseSigning.getValue("NOCA_KEY_ALIAS")
                 keyPassword = releaseSigning.getValue("NOCA_KEY_PASSWORD")
+                enableV2Signing = true
+                enableV3Signing = true
             }
         }
     }
