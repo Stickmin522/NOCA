@@ -10931,7 +10931,7 @@ function requireClone () {
 
 
 	/**
-	 * Produces a deep copy of stylesheet �� the instance variables of stylesheet are copied recursively.
+	 * Produces a deep copy of stylesheet — the instance variables of stylesheet are copied recursively.
 	 * @param {CSSStyleSheet|CSSOM.CSSStyleSheet} stylesheet
 	 * @nosideeffects
 	 * @return {CSSOM.CSSStyleSheet}

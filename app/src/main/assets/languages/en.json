@@ -1,7 +1,7 @@
 {
   "scan":"Scan", "wallet":"Cards", "settings":"Settings", "back":"Back",
   "title":"One tap.\nAll clear.", "scan_hint":"Hold a transit card against the back of your phone",
-  "nfc_ready":"NFC ready", "waiting":"Waiting for your card", "reading":"Reading��",
+  "nfc_ready":"NFC ready", "waiting":"Waiting for your card", "reading":"Reading…",
   "balance":"Card balance", "read_success":"Read successfully", "remember":"Remember this card",
   "recent":"Recent transactions", "empty_history":"Tap a card to see recent transactions",
   "local_only":"Card data stays on this device", "card_name":"Card name", "name_hint":"For example: Commute card",

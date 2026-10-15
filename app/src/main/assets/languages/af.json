@@ -7,7 +7,7 @@
   "scan_hint": "Hou 'n publieke vervoerkaart teen die agterkant van jou foon",
   "nfc_ready": "NFC gereed",
   "waiting": "Wag vir jou kaart",
-  "reading": "Lees tans ��",
+  "reading": "Lees tans …",
   "balance": "Kaartbalans",
   "read_success": "Lees suksesvol",
   "remember": "Onthou hierdie kaart",
@@ -60,7 +60,7 @@
   "partial_history": "Sommige geskiedenisblokke was nie beskikbaar nie. Die balans is suksesvol gelees.",
   "synced": "Gestoorde saldo en transaksies is opgedateer",
   "unnamed_card": "Transit kaart",
-  "card_art_hint": "Kunswerke en name be?nvloed slegs die vertoning in hierdie toepassing. Hulle verander nie die fisiese kaart of die uitreiker daarvan nie.",
+  "card_art_hint": "Kunswerke en name beïnvloed slegs die vertoning in hierdie toepassing. Hulle verander nie die fisiese kaart of die uitreiker daarvan nie.",
   "no_cards": "Nog geen kaarte wat onthou word nie",
   "no_cards_hint": "Lees 'n fisiese vervoerkaart en kies dan om dit te onthou.",
   "art_generic": "Verstek"

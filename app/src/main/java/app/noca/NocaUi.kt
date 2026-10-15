@@ -52,7 +52,7 @@ import java.util.Date
 import java.util.Locale
 
 private enum class Page{SCAN,WALLET,SETTINGS}
-private fun yen(amount:Int):String="��"+NumberFormat.getIntegerInstance().format(amount)
+private fun yen(amount:Int):String="¥"+NumberFormat.getIntegerInstance().format(amount)
 private fun timestamp(time:Long):String=SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT,SimpleDateFormat.SHORT).format(Date(time))
 
 private class TicketShape:Shape{
@@ -203,7 +203,7 @@ private class TicketShape:Shape{
                         Surface(shape=RoundedCornerShape(14.dp),color=MaterialTheme.colorScheme.surface){Box(Modifier.size(38.dp),contentAlignment=Alignment.Center){Icon(icon,null,Modifier.size(21.dp))}}
                         Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(3.dp)){Text(t[kind],style=MaterialTheme.typography.bodyLarge);Text(item.date,style=MaterialTheme.typography.labelSmall,color=MaterialTheme.colorScheme.onSurfaceVariant)}
                         Column(horizontalAlignment=Alignment.End,verticalArrangement=Arrangement.spacedBy(3.dp)){
-                            Text(item.delta?.let{(if(it>0)"+"else if(it<0)"?"else "")+yen(kotlin.math.abs(it))}?:"��",style=MaterialTheme.typography.titleMedium)
+                            Text(item.delta?.let{(if(it>0)"+"else if(it<0)"−"else "")+yen(kotlin.math.abs(it))}?:"—",style=MaterialTheme.typography.titleMedium)
                             Text(t["balance"]+" "+yen(item.balance),style=MaterialTheme.typography.labelSmall,color=MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
