@@ -1,0 +1,56 @@
+[
+  {
+    "id": "generic",
+    "name": "NOCA",
+    "file": null,
+    "source": null
+  },
+  {
+    "id": "suica",
+    "name": "Suica",
+    "file": "suica.png",
+    "source": "https://www.jreast.co.jp/suica/ic/whats/service.html/"
+  },
+  {
+    "id": "pasmo",
+    "name": "PASMO",
+    "file": "pasmo.webp",
+    "source": "https://www.pasmo.co.jp/ic-card/buy/type/"
+  },
+  {
+    "id": "icoca",
+    "name": "ICOCA",
+    "file": "icoca.png",
+    "source": "https://www.jr-odekake.net/icoca/about/"
+  },
+  {
+    "id": "kitaca",
+    "name": "Kitaca",
+    "file": "kitaca.jpg",
+    "source": "https://www.jrhokkaido.co.jp/kitaca/01about.html"
+  },
+  {
+    "id": "toica",
+    "name": "TOICA",
+    "file": "toica.png",
+    "source": "https://toica.jr-central.co.jp/outline/type/index.html"
+  },
+  {
+    "id": "sugoca",
+    "name": "SUGOCA",
+    "file": "sugoca.png",
+    "source": "https://www.jrkyushu.co.jp/sugoca/about/kinds/"
+  },
+  {
+    "id": "nimoca",
+    "name": "nimoca",
+    "file": "nimoca.jpg",
+    "source": "https://www.nimoca.jp/about/type"
+  },
+  {
+    "id": "pitapa",
+    "name": "PiTaPa",
+    "file": "pitapa.png",
+    "source": "https://www.pitapa.com/"
+  }
+]

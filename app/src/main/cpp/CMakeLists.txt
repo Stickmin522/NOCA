@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.22.1)
+project(noca LANGUAGES C)
+add_library(noca_core STATIC IMPORTED)
+set_target_properties(noca_core PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/../../../../native/rust/target/aarch64-linux-android/release/libnoca_core.a")
+add_library(noca SHARED bridge.c)
+target_link_libraries(noca noca_core log android dl m)
+target_link_options(noca PRIVATE "-Wl,-z,max-page-size=16384" "-Wl,-z,common-page-size=16384")
