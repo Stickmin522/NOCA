@@ -63,5 +63,11 @@
   "card_art_hint": "Umělecká díla a názvy ovlivňují pouze zobrazení v této aplikaci. Nemění fyzickou kartu ani jejího vydavatele.",
   "no_cards": "Zatím žádné nezapamatované karty",
   "no_cards_hint": "Přečtěte si fyzickou přepravní kartu a poté si ji zapamatujte.",
-  "art_generic": "Výchozí"
+  "art_generic": "Výchozí",
+  "forget_card": "Zapomenout tuto kartu",
+  "forget_message": "Odstranit tuto kartu a její uložené transakce z tohoto zařízení?",
+  "delete": "Smazat",
+  "choose_photo": "Vybrat fotografii",
+  "storage_error": "Data karty se nepodařilo uložit nebo načíst. Zkuste to znovu.",
+  "image_error": "Obrázek nelze otevřít. Vyberte jinou fotografii."
 }

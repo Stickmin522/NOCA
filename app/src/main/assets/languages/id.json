@@ -63,5 +63,11 @@
   "card_art_hint": "Karya seni dan nama hanya mempengaruhi tampilan di aplikasi ini. Mereka tidak mengubah kartu fisik atau penerbitnya.",
   "no_cards": "Belum ada kartu yang diingat",
   "no_cards_hint": "Baca kartu transit fisik, lalu pilih untuk mengingatnya.",
-  "art_generic": "Bawaan"
+  "art_generic": "Bawaan",
+  "forget_card": "Lupakan kartu ini",
+  "forget_message": "Hapus kartu ini dan transaksi tersimpannya dari perangkat ini?",
+  "delete": "Hapus",
+  "choose_photo": "Pilih foto",
+  "storage_error": "Tidak dapat menyimpan atau memuat data kartu. Coba lagi.",
+  "image_error": "Tidak dapat membuka gambar ini. Pilih foto lain."
 }

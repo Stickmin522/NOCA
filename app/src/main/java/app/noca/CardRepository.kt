@@ -1,42 +1,139 @@
 package app.noca
 
-import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import org.json.JSONObject
 
-class CardRepository(context:Context):SQLiteOpenHelper(context,"noca.db",null,1) {
-    override fun onConfigure(db:SQLiteDatabase){db.setForeignKeyConstraintsEnabled(true)}
-    override fun onCreate(db:SQLiteDatabase){
-        db.execSQL("CREATE TABLE cards(id TEXT PRIMARY KEY,name TEXT NOT NULL,art TEXT NOT NULL,balance INTEGER NOT NULL,read_at INTEGER NOT NULL)")
-        db.execSQL("CREATE TABLE records(card_id TEXT NOT NULL,raw TEXT NOT NULL,data TEXT NOT NULL,card_date TEXT NOT NULL,sequence INTEGER NOT NULL,read_at INTEGER NOT NULL,position INTEGER NOT NULL,PRIMARY KEY(card_id,raw),FOREIGN KEY(card_id) REFERENCES cards(id) ON DELETE CASCADE)")
+class CardRepository(context: Context) : SQLiteOpenHelper(context, "noca.db", null, 2) {
+    override fun onConfigure(db: SQLiteDatabase) {
+        db.setForeignKeyConstraintsEnabled(true)
     }
-    override fun onUpgrade(db:SQLiteDatabase,oldVersion:Int,newVersion:Int)=Unit
-    fun cards():List<SavedCard> = readableDatabase.rawQuery("SELECT id,name,art,balance,read_at FROM cards ORDER BY read_at DESC",null).use { c->buildList{while(c.moveToNext()) add(SavedCard(c.getString(0),c.getString(1),c.getString(2),c.getInt(3),c.getLong(4)))}}
-    fun history(id:String):List<Transaction> = readableDatabase.rawQuery("SELECT data FROM records WHERE card_id=? ORDER BY card_date DESC,sequence DESC,read_at DESC,position ASC",arrayOf(id)).use { c->buildList{while(c.moveToNext())add(Transaction.fromJson(org.json.JSONObject(c.getString(0))))}}
-    fun remember(snapshot:CardSnapshot,name:String,art:String){
-        val db=writableDatabase;db.beginTransaction()
-        try{
-            val v=ContentValues().apply{put("id",snapshot.id);put("name",name);put("art",art);put("balance",snapshot.balance);put("read_at",snapshot.readAt)}
-            db.insertWithOnConflict("cards",null,v,SQLiteDatabase.CONFLICT_IGNORE)
-            updateSnapshot(db,snapshot);db.setTransactionSuccessful()
-        }finally{db.endTransaction()}
+
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL(CardSql.CREATE_CARDS)
+        db.execSQL(CardSql.CREATE_RECORDS)
+        db.execSQL(CardSql.CREATE_INDEX)
     }
-    fun sync(snapshot:CardSnapshot):Boolean {
-        val exists=readableDatabase.rawQuery("SELECT 1 FROM cards WHERE id=?",arrayOf(snapshot.id)).use{it.moveToFirst()}
-        if(!exists)return false
-        val db=writableDatabase;db.beginTransaction();try{updateSnapshot(db,snapshot);db.setTransactionSuccessful()}finally{db.endTransaction()};return true
-    }
-    private fun updateSnapshot(db:SQLiteDatabase,s:CardSnapshot){
-        // Only mutable scan data is updated: the user's chosen name and artwork survive.
-        db.update("cards",ContentValues().apply{put("balance",s.balance);put("read_at",s.readAt)},"id=?",arrayOf(s.id))
-        s.history.forEachIndexed{index,t->
-            val v=ContentValues().apply{put("card_id",s.id);put("raw",t.raw);put("data",t.toJson().toString());put("card_date",t.date);put("sequence",t.sequence);put("read_at",s.readAt);put("position",index)}
-            // Existing rows retain their original arrival ordering. Enrich an unknown delta
-            // if a later read supplies the preceding record, without dropping old history.
-            val inserted=db.insertWithOnConflict("records",null,v,SQLiteDatabase.CONFLICT_IGNORE)
-            if(inserted==-1L && t.delta!=null)db.update("records",ContentValues().apply{put("data",t.toJson().toString())},"card_id=? AND raw=?",arrayOf(s.id,t.raw))
+
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        if (oldVersion < 2) {
+            db.execSQL(CardSql.MIGRATE_V2)
+            db.execSQL(CardSql.CREATE_INDEX)
         }
     }
-    fun edit(id:String,name:String,art:String){writableDatabase.update("cards",ContentValues().apply{put("name",name);put("art",art)},"id=?",arrayOf(id))}
+
+    fun cards(): List<SavedCard> =
+        readableDatabase
+            .rawQuery(
+                CardSql.CARDS,
+                null,
+            )
+            .use { cursor ->
+                buildList {
+                    while (cursor.moveToNext()) {
+                        add(
+                            SavedCard(
+                                cursor.getString(0),
+                                cursor.getString(1),
+                                cursor.getString(2),
+                                cursor.getInt(3),
+                                cursor.getLong(4),
+                                cursor.getInt(5) != 0,
+                            )
+                        )
+                    }
+                }
+            }
+
+    fun history(id: String): List<Transaction> =
+        readableDatabase
+            .rawQuery(
+                CardSql.HISTORY,
+                arrayOf(id),
+            )
+            .use { cursor ->
+                buildList {
+                    while (cursor.moveToNext()) add(
+                        Transaction.fromJson(JSONObject(cursor.getString(0)))
+                    )
+                }
+            }
+
+    fun remember(snapshot: CardSnapshot, name: String, art: String) {
+        require(name.isNotBlank() && name.trim().length <= 40)
+        transaction { db ->
+            db.execSQL(
+                CardSql.INSERT_CARD,
+                arrayOf<Any>(
+                    snapshot.id,
+                    name.trim(),
+                    art,
+                    snapshot.balance,
+                    snapshot.readAt,
+                    if (snapshot.partial) 1 else 0,
+                ),
+            )
+            updateSnapshot(db, snapshot)
+        }
+    }
+
+    fun sync(snapshot: CardSnapshot): Boolean = transaction { db ->
+        val exists = db.rawQuery(CardSql.EXISTS, arrayOf(snapshot.id)).use { it.moveToFirst() }
+        if (exists) updateSnapshot(db, snapshot)
+        exists
+    }
+
+    private fun updateSnapshot(db: SQLiteDatabase, snapshot: CardSnapshot) {
+        // A delayed save must not overwrite a more recent NFC scan.
+        db.execSQL(
+            CardSql.UPDATE_SNAPSHOT,
+            arrayOf<Any>(
+                snapshot.balance,
+                snapshot.readAt,
+                if (snapshot.partial) 1 else 0,
+                snapshot.id,
+                snapshot.readAt,
+            ),
+        )
+        snapshot.history.forEachIndexed { index, record ->
+            val data = record.toJson().toString()
+            db.execSQL(
+                CardSql.INSERT_RECORD,
+                arrayOf<Any>(
+                    snapshot.id,
+                    record.raw,
+                    data,
+                    record.date,
+                    record.sequence,
+                    snapshot.readAt,
+                    index,
+                ),
+            )
+            if (record.delta != null) {
+                db.execSQL(CardSql.UPDATE_RECORD, arrayOf(data, snapshot.id, record.raw))
+            }
+        }
+    }
+
+    fun edit(id: String, name: String, art: String) {
+        require(name.isNotBlank() && name.trim().length <= 40)
+        writableDatabase.execSQL(CardSql.EDIT_CARD, arrayOf(name.trim(), art, id))
+    }
+
+    fun forget(id: String) {
+        writableDatabase.execSQL(CardSql.DELETE_CARD, arrayOf(id))
+    }
+
+    private inline fun <T> transaction(block: (SQLiteDatabase) -> T): T {
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val result = block(db)
+            db.setTransactionSuccessful()
+            return result
+        } finally {
+            db.endTransaction()
+        }
+    }
 }

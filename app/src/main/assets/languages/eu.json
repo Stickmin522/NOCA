@@ -63,5 +63,11 @@
   "card_art_hint": "Artelanek eta izenek aplikazio honetako pantailan soilik eragiten dute. Ez dute txartel fisikoa edo bere jaulkitzailea aldatzen.",
   "no_cards": "Oraindik ez dago gogoratu txartelik",
   "no_cards_hint": "Irakurri garraio-txartel fisiko bat, eta hautatu gogoratzea.",
-  "art_generic": "Lehenetsia"
+  "art_generic": "Lehenetsia",
+  "forget_card": "Ahaztu txartel hau",
+  "forget_message": "Kendu txartel hau eta gordetako transakzioak gailu honetatik?",
+  "delete": "Ezabatu",
+  "choose_photo": "Aukeratu argazkia",
+  "storage_error": "Ezin izan dira txartelaren datuak gorde edo kargatu. Saiatu berriro.",
+  "image_error": "Ezin izan da irudia ireki. Aukeratu beste argazki bat."
 }

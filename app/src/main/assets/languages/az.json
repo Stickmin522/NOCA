@@ -63,5 +63,11 @@
   "card_art_hint": "İncəsənət əsərləri və adlar yalnız bu proqramdakı ekrana təsir göstərir. Onlar fiziki kartı və ya onun emitentini dəyişmirlər.",
   "no_cards": "Hələ yadda qalan kart yoxdur",
   "no_cards_hint": "Fiziki tranzit kartını oxuyun, sonra onu yadda saxlamağı seçin.",
-  "art_generic": "Defolt"
+  "art_generic": "Defolt",
+  "forget_card": "Bu kartı unut",
+  "forget_message": "Bu kart və saxlanmış əməliyyatları cihazdan silinsin?",
+  "delete": "Sil",
+  "choose_photo": "Şəkil seç",
+  "storage_error": "Kart məlumatları saxlanıla və ya yüklənə bilmədi. Yenidən cəhd edin.",
+  "image_error": "Şəkil açıla bilmədi. Başqa şəkil seçin."
 }

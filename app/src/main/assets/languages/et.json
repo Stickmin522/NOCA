@@ -63,5 +63,11 @@
   "card_art_hint": "Kunstiteosed ja nimed mõjutavad ainult selle rakenduse kuva. Nad ei muuda füüsilist kaarti ega selle väljaandjat.",
   "no_cards": "Veel pole meelde jäänud kaarte",
   "no_cards_hint": "Lugege füüsilist ühistranspordikaarti ja valige see siis meeles pidada.",
-  "art_generic": "Vaikimisi"
+  "art_generic": "Vaikimisi",
+  "forget_card": "Unusta see kaart",
+  "forget_message": "Kas eemaldada see kaart ja selle salvestatud tehingud sellest seadmest?",
+  "delete": "Kustuta",
+  "choose_photo": "Vali foto",
+  "storage_error": "Kaardiandmeid ei saanud salvestada või laadida. Proovi uuesti.",
+  "image_error": "Pilti ei saanud avada. Vali teine foto."
 }

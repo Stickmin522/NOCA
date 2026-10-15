@@ -63,5 +63,11 @@
   "card_art_hint": "Taideteokset ja nimet vaikuttavat vain tämän sovelluksen näyttöön. He eivät muuta fyysistä korttia tai sen myöntäjää.",
   "no_cards": "Ei muistikortteja vielä",
   "no_cards_hint": "Lue fyysinen liikennekortti ja muista se sitten.",
-  "art_generic": "Oletus"
+  "art_generic": "Oletus",
+  "forget_card": "Unohda tämä kortti",
+  "forget_message": "Poistetaanko tämä kortti ja sen tallennetut tapahtumat tältä laitteelta?",
+  "delete": "Poista",
+  "choose_photo": "Valitse kuva",
+  "storage_error": "Korttitietojen tallennus tai lataus epäonnistui. Yritä uudelleen.",
+  "image_error": "Kuvaa ei voitu avata. Valitse toinen kuva."
 }

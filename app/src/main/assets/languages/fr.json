@@ -63,5 +63,11 @@
   "card_art_hint": "Les illustrations et les noms n'affectent que l'affichage dans cette application. Ils ne changent ni la carte physique ni son émetteur.",
   "no_cards": "Aucune carte mémorisée pour l'instant",
   "no_cards_hint": "Lisez une carte de transport physique, puis choisissez de vous en souvenir.",
-  "art_generic": "Défaut"
+  "art_generic": "Défaut",
+  "forget_card": "Oublier cette carte",
+  "forget_message": "Supprimer cette carte et ses transactions enregistrées de cet appareil ?",
+  "delete": "Supprimer",
+  "choose_photo": "Choisir une photo",
+  "storage_error": "Impossible d’enregistrer ou de charger les données de la carte. Réessayez.",
+  "image_error": "Impossible d’ouvrir cette image. Choisissez une autre photo."
 }

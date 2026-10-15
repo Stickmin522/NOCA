@@ -63,5 +63,11 @@
   "card_art_hint": "Grafiken und Namen wirken sich nur auf die Anzeige in dieser App aus. Sie ändern weder die physische Karte noch ihren Aussteller.",
   "no_cards": "Noch keine gespeicherten Karten",
   "no_cards_hint": "Lesen Sie eine physische ÖPNV-Karte und entscheiden Sie sich dann, sie sich zu merken.",
-  "art_generic": "Standard"
+  "art_generic": "Standard",
+  "forget_card": "Diese Karte entfernen",
+  "forget_message": "Diese Karte und ihre gespeicherten Umsätze von diesem Gerät entfernen?",
+  "delete": "Löschen",
+  "choose_photo": "Foto auswählen",
+  "storage_error": "Kartendaten konnten nicht gespeichert oder geladen werden. Bitte erneut versuchen.",
+  "image_error": "Dieses Bild konnte nicht geöffnet werden. Bitte ein anderes Foto auswählen."
 }

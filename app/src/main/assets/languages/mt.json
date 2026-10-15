@@ -63,5 +63,11 @@
   "card_art_hint": "L-arti u l-ismijiet jaffettwaw biss il-wiri f'din l-app. Ma jbiddlux il-karta fiżika jew l-emittent tagħha.",
   "no_cards": "Għadu l-ebda karti mfakkra",
   "no_cards_hint": "Aqra karta ta 'transitu fiżiku, imbagħad agħżel li tiftakarha.",
-  "art_generic": "Default"
+  "art_generic": "Default",
+  "forget_card": "Neħħi din il-karta",
+  "forget_message": "Tneħħi din il-karta u t-tranżazzjonijiet salvati tagħha minn dan l-apparat?",
+  "delete": "Ħassar",
+  "choose_photo": "Agħżel ritratt",
+  "storage_error": "Ma setgħetx tiġi ssejvjata jew mgħobbija d-data tal-karta. Erġa’ pprova.",
+  "image_error": "Ma setgħetx tinfetaħ din l-immaġni. Agħżel ritratt ieħor."
 }

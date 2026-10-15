@@ -63,5 +63,11 @@
   "card_art_hint": "Kunst og navne påvirker kun visningen i denne app. De ændrer ikke det fysiske kort eller dets udsteder.",
   "no_cards": "Ingen huskede kort endnu",
   "no_cards_hint": "Læs et fysisk transitkort, og vælg derefter at huske det.",
-  "art_generic": "Misligholdelse"
+  "art_generic": "Misligholdelse",
+  "forget_card": "Glem dette kort",
+  "forget_message": "Fjern dette kort og dets gemte transaktioner fra denne enhed?",
+  "delete": "Slet",
+  "choose_photo": "Vælg et foto",
+  "storage_error": "Kortdata kunne ikke gemmes eller indlæses. Prøv igen.",
+  "image_error": "Billedet kunne ikke åbnes. Vælg et andet foto."
 }

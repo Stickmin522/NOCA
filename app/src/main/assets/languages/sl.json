@@ -63,5 +63,11 @@
   "card_art_hint": "Umetnine in imena vplivajo samo na prikaz v tej aplikaciji. Ne spreminjajo fizične kartice ali njenega izdajatelja.",
   "no_cards": "Ni še shranjenih kartic",
   "no_cards_hint": "Preberite fizično kartico za javni prevoz in si jo nato zapomnite.",
-  "art_generic": "Privzeto"
+  "art_generic": "Privzeto",
+  "forget_card": "Pozabi to kartico",
+  "forget_message": "Odstranim to kartico in shranjene transakcije iz te naprave?",
+  "delete": "Izbriši",
+  "choose_photo": "Izberi fotografijo",
+  "storage_error": "Podatkov kartice ni bilo mogoče shraniti ali naložiti. Poskusite znova.",
+  "image_error": "Slike ni bilo mogoče odpreti. Izberite drugo fotografijo."
 }

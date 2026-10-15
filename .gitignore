@@ -9,3 +9,11 @@ signing/
 *.apk
 *.aab
 captures/
+.kotlin/
+**/.cxx/
+*.p12
+*.pem
+*.key
+.env
+.env.*
+key.properties

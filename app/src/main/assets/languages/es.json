@@ -63,5 +63,11 @@
   "card_art_hint": "Las ilustraciones y los nombres solo afectan la visualización en esta aplicación. No cambian la tarjeta física ni su emisor.",
   "no_cards": "Aún no hay tarjetas recordadas",
   "no_cards_hint": "Lea una tarjeta de tránsito física y luego elija recordarla.",
-  "art_generic": "Por defecto"
+  "art_generic": "Por defecto",
+  "forget_card": "Olvidar esta tarjeta",
+  "forget_message": "¿Eliminar esta tarjeta y sus transacciones guardadas de este dispositivo?",
+  "delete": "Eliminar",
+  "choose_photo": "Elegir una foto",
+  "storage_error": "No se pudieron guardar o cargar los datos de la tarjeta. Inténtalo de nuevo.",
+  "image_error": "No se pudo abrir esta imagen. Elige otra foto."
 }

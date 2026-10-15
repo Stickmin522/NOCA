@@ -63,5 +63,11 @@
   "card_art_hint": "As obras de arte e os nomes só afectan á visualización desta aplicación. Non cambian a tarxeta física nin o seu emisor.",
   "no_cards": "Aínda non se lembran tarxetas",
   "no_cards_hint": "Le unha tarxeta de transporte público e escolle lembrala.",
-  "art_generic": "Por defecto"
+  "art_generic": "Por defecto",
+  "forget_card": "Esquecer esta tarxeta",
+  "forget_message": "Eliminar esta tarxeta e as súas transaccións gardadas deste dispositivo?",
+  "delete": "Eliminar",
+  "choose_photo": "Escoller unha foto",
+  "storage_error": "Non se puideron gardar ou cargar os datos. Téntao de novo.",
+  "image_error": "Non se puido abrir a imaxe. Escolle outra foto."
 }

@@ -31,12 +31,17 @@
   "hy": "հայերեն",
   "id": "Indonesia",
   "is": "íslenska",
+  "it": "italiano",
   "ja": "日本語",
+  "ko": "한국어",
   "mn": "монгол",
   "mt": "Malti",
   "or": "ଓଡ଼ିଆ",
+  "pt": "português",
+  "ru": "русский",
   "sl": "slovenščina",
   "tk": "türkmen dili",
   "tr": "Türkçe",
-  "zh-Hans": "简体中文"
+  "zh-Hans": "简体中文",
+  "zh-Hant": "繁體中文"
 }

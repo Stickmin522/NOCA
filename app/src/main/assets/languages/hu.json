@@ -63,5 +63,11 @@
   "card_art_hint": "Az alkotások és a nevek csak a megjelenítést érintik ebben az alkalmazásban. Nem változtatják meg a fizikai kártyát vagy annak kibocsátóját.",
   "no_cards": "Még nincsenek emlékezett kártyák",
   "no_cards_hint": "Olvasson el egy fizikai tömegközlekedési kártyát, majd válassza az emlékezést.",
-  "art_generic": "Alapértelmezett"
+  "art_generic": "Alapértelmezett",
+  "forget_card": "Kártya elfelejtése",
+  "forget_message": "Eltávolítja ezt a kártyát és a mentett tranzakcióit az eszközről?",
+  "delete": "Törlés",
+  "choose_photo": "Fénykép kiválasztása",
+  "storage_error": "A kártyaadatok mentése vagy betöltése sikertelen. Próbálja újra.",
+  "image_error": "A kép nem nyitható meg. Válasszon másik fényképet."
 }

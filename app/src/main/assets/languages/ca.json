@@ -63,5 +63,11 @@
   "card_art_hint": "Les il·lustracions i els noms només afecten la visualització d'aquesta aplicació. No canvien la targeta física ni el seu emissor.",
   "no_cards": "Encara no es recorda cap targeta",
   "no_cards_hint": "Llegiu una targeta de transport públic i, a continuació, trieu recordar-la.",
-  "art_generic": "Per defecte"
+  "art_generic": "Per defecte",
+  "forget_card": "Oblida aquesta targeta",
+  "forget_message": "Vols eliminar aquesta targeta i les seves transaccions desades del dispositiu?",
+  "delete": "Elimina",
+  "choose_photo": "Tria una foto",
+  "storage_error": "No s’han pogut desar o carregar les dades. Torna-ho a provar.",
+  "image_error": "No s’ha pogut obrir la imatge. Tria una altra foto."
 }

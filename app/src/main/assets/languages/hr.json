@@ -63,5 +63,11 @@
   "card_art_hint": "Ilustracije i imena utječu samo na prikaz u ovoj aplikaciji. Ne mijenjaju fizičku karticu niti njezina izdavatelja.",
   "no_cards": "Još nema zapamćenih kartica",
   "no_cards_hint": "Pročitajte fizičku kartu za javni prijevoz, a zatim je odaberite zapamtiti.",
-  "art_generic": "Zadano"
+  "art_generic": "Zadano",
+  "forget_card": "Zaboravi ovu karticu",
+  "forget_message": "Ukloniti ovu karticu i njezine spremljene transakcije s ovog uređaja?",
+  "delete": "Izbriši",
+  "choose_photo": "Odaberi fotografiju",
+  "storage_error": "Podatke kartice nije moguće spremiti ili učitati. Pokušajte ponovno.",
+  "image_error": "Sliku nije moguće otvoriti. Odaberite drugu fotografiju."
 }

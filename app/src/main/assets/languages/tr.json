@@ -63,5 +63,11 @@
   "card_art_hint": "Çizimler ve adlar yalnızca bu uygulamadaki ekranı etkiler. Fiziksel kartı veya kartı veren kuruluşu değiştirmezler.",
   "no_cards": "Henüz hatırlanan kart yok",
   "no_cards_hint": "Fiziksel bir toplu taşıma kartını okuyun ve ardından onu hatırlamayı seçin.",
-  "art_generic": "Varsayılan"
+  "art_generic": "Varsayılan",
+  "forget_card": "Bu kartı unut",
+  "forget_message": "Bu kart ve kayıtlı işlemleri bu cihazdan kaldırılsın mı?",
+  "delete": "Sil",
+  "choose_photo": "Fotoğraf seç",
+  "storage_error": "Kart verileri kaydedilemedi veya yüklenemedi. Tekrar deneyin.",
+  "image_error": "Bu görüntü açılamadı. Başka bir fotoğraf seçin."
 }

@@ -63,5 +63,11 @@
   "card_art_hint": "Mae gwaith celf ac enwau yn effeithio ar yr arddangosfa yn yr app hon yn unig. Nid ydynt yn newid y cerdyn corfforol na'i gyhoeddwr.",
   "no_cards": "Dim cardiau cofio eto",
   "no_cards_hint": "Darllenwch gerdyn teithio corfforol, yna dewiswch ei gofio.",
-  "art_generic": "Diofyn"
+  "art_generic": "Diofyn",
+  "forget_card": "Anghofio’r cerdyn hwn",
+  "forget_message": "Tynnu’r cerdyn hwn a’i drafodion wedi’u cadw o’r ddyfais hon?",
+  "delete": "Dileu",
+  "choose_photo": "Dewis llun",
+  "storage_error": "Methu cadw neu lwytho data’r cerdyn. Rhowch gynnig arall arni.",
+  "image_error": "Methu agor y ddelwedd. Dewiswch lun arall."
 }

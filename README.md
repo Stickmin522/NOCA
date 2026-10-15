@@ -1,40 +1,77 @@
 # NOCA
 
-日本交通 IC 卡余额与交易记录查看器。计划使用 **Rust + Jetpack Compose**，以 Material 3 Expressive 为主体，并在容器和按钮中加入适度 Soft UI 效果。
+An offline NFC reader for Japanese transit IC cards, built with Rust and Jetpack Compose.
 
-> **当前状态：开发暂停，保存已有工作。** 根据用户 2026-10-16（日本时间）的要求，本次只整理并上传现有资料，不继续开发 APP。仓库中的 Android 代码是尚未通过完整编译与实机验证的开发快照，不是可发布版本；目前没有可安装 APK。
+[Download APK](https://github.com/Stickmin522/NOCA/releases/latest) · [中文](#中文) · [日本語](#日本語) · [한국어](#한국어) · [Français](#français) · [Español](#español) · [العربية](#العربية)
 
-## 需求与设计
+## Features
 
-- [完整需求与最终设计决定](docs/REQUIREMENTS.md)
-- [已完成内容、验证结果与待办](docs/STATUS.md)
-- [设计原型说明](design/README.md)
-- [卡面来源与第三方素材说明](docs/ASSETS.md)
-- [构建配置及交接说明](docs/BUILD-NOTES.md)
+- Read the balance and recent transactions from compatible FeliCa transit cards.
+- Remember cards with a name and artwork; scan them again to update their balance and history.
+- Keep previously read transactions on your device, even after they leave the card's history.
+- Choose a card design or import your own photo. Delete saved cards and their history at any time.
+- Material 3 Expressive interface, ticket-shaped balance cards, and soft shadows.
+- Lime, Mist Blue, and Coral themes with light, dark, and system modes.
+- System fonts, automatic language selection, and a searchable language picker.
 
-最终名称为 **NOCA**；沿用 NOKA 方案的整体布局和“倾斜卡片 + NFC 波纹”图标。余额区域采用 SUMI 的票券轮廓，并随主题配色。主题仅切换颜色，分别为 **活力青柠、雾蓝、暖珊瑚**。
+Language selection follows the device's preferences, with English as a fallback when a translation is unavailable.
 
-## 当前已有内容
+## Getting started
 
-| 内容 | 当前状态 |
-| --- | --- |
-| Rust FeliCa 报文、余额与历史解析 | 已编写；8 项单元测试通过；ARM64 静态库曾交叉编译成功 |
-| JNI / Android NFC 读取桥接 | 已编写，未完成设备验证 |
-| 本地卡包、命名、卡面选择及重复读卡同步 | 已编写，尚未完成运行验证 |
-| Compose 读卡、卡包、详情、设置界面 | 已编写，Android 整体编译尚未通过 |
-| 三种配色、明暗模式、系统字体、NOKA 图标 | 已写入代码和资源，待设备视觉验收 |
-| 多语言 | 已有 40 份语言资源；部分为机器翻译；未达到“所有系统语言”的目标 |
-| 卡面 | 已收集 8 个品牌卡面及来源；未覆盖全部发行卡种，部分素材待逐一复核 |
-| 设计资料 | 保存早期三方案 HTML 原型及预览文件；最终要求以需求文档为准 |
-| ARM64 APK / 发布 | 尚未完成，无 APK、无发布版本 |
+Install the **arm64-v8a APK** on an NFC-F-capable phone running **Android 10 or later**. Enable NFC, open NOCA, and hold one transit card against the phone's NFC antenna. Choose **Remember this card** to add it to your wallet.
 
-## 目录
+The available history depends on the card. Transaction amounts are calculated only when consecutive records establish a balance change. NOCA reads card data; it does not top up cards or replace a physical transit pass.
 
-- `app/`：Android 应用、Compose UI、SQLite 存储、JNI、图标、语言和卡面资源。
-- `native/rust/`：Rust 协议与解析核心、单元测试。
-- `design/`：已有 NOKA / KASANE / SUMI 设计原型和浏览器预览资料。
-- `docs/`：需求、进度、素材出处和构建交接说明。
-- `archive/tooling/`：此前构建排障用脚本的原样存档，含本机路径，不是通用构建入口。
-- `locales.json`：候选语言清单，不代表已完成或完整覆盖所有系统语言。
+## Privacy
 
-本次上传不包含 SDK、编译器、依赖缓存、本机路径配置、生成的构建目录或密钥。继续开发需用户后续明确指示。
+NOCA works without an account or internet access. Card information and imported artwork stay in the app's private storage. The app has no internet permission, advertising, analytics, or cloud backup. Imported photos are saved without location or camera metadata.
+
+## Build
+
+Use JDK 21 and the pinned Rust and Gradle versions. Install Android SDK Platform 37.0, Build Tools 36.0.0, NDK 28.2.13676358, and CMake 3.22.1, then set `ANDROID_HOME` to your SDK directory.
+
+```sh
+rustup target add aarch64-linux-android
+cargo test --manifest-path native/rust/Cargo.toml --locked
+./scripts/build-android.sh :app:testDebugUnitTest :app:lintRelease :app:assembleRelease
+```
+
+Release builds are unsigned unless `NOCA_KEYSTORE_PATH`, `NOCA_KEYSTORE_PASSWORD`, `NOCA_KEY_ALIAS`, and `NOCA_KEY_PASSWORD` are provided. Keep signing files and passwords outside the repository.
+
+The source code is licensed under [MIT](LICENSE). Card images and issuer trademarks belong to their respective owners; see [artwork credits](docs/ASSETS.md).
+
+## 中文
+
+NOCA 是一款离线的日本交通 IC 卡读取应用。将交通卡贴近 Android 手机，即可查看余额和最近交易；保存卡片后可自定义名称与卡面，再次贴卡时自动更新。支持自定义照片、三种主题配色、明暗模式和语言选择，所有卡片数据仅保存在本机。
+
+需要 Android 10 或更高版本，以及支持 NFC-F 的 ARM64 手机。
+
+## 日本語
+
+NOCA は、日本の交通系 IC カードの残高と利用履歴をオフラインで確認できる Android アプリです。カードをかざして読み取り、名前や券面を設定して保存できます。同じカードを再びかざすと残高と履歴を更新します。写真による券面のカスタマイズ、3 種類の配色、ライト・ダークモード、言語選択に対応し、カード情報は端末内だけに保存されます。
+
+Android 10 以降と、NFC-F に対応した ARM64 端末が必要です。
+
+## 한국어
+
+NOCA는 일본 교통 IC 카드의 잔액과 최근 이용 내역을 오프라인으로 확인하는 Android 앱입니다. 카드를 휴대전화에 대어 읽고, 이름과 카드 디자인을 지정해 저장할 수 있습니다. 같은 카드를 다시 읽으면 잔액과 내역이 갱신됩니다. 사진으로 카드 디자인을 꾸미고 세 가지 테마 색상, 밝은 모드와 어두운 모드, 앱 언어를 선택할 수 있습니다. 카드 정보는 기기에만 저장됩니다.
+
+Android 10 이상 및 NFC-F를 지원하는 ARM64 휴대전화가 필요합니다.
+
+## Français
+
+NOCA permet de consulter hors ligne le solde et les transactions récentes des cartes de transport IC japonaises. Approchez une carte de votre téléphone Android, puis enregistrez-la avec un nom et un visuel. Une nouvelle lecture actualise son solde et son historique. Personnalisez vos cartes avec des photos et choisissez parmi trois couleurs, les modes clair et sombre et plusieurs langues. Les données restent sur votre appareil.
+
+Android 10 ou version ultérieure et un téléphone ARM64 compatible NFC-F sont nécessaires.
+
+## Español
+
+NOCA permite consultar sin conexión el saldo y las transacciones recientes de las tarjetas IC de transporte japonesas. Acerca una tarjeta a tu teléfono Android y guárdala con un nombre y una imagen. Al volver a leerla, se actualizan el saldo y el historial. Puedes usar tus propias fotos y elegir entre tres colores, los modos claro y oscuro y varios idiomas. Los datos permanecen en tu dispositivo.
+
+Requiere Android 10 o posterior y un teléfono ARM64 compatible con NFC-F.
+
+## العربية
+
+يتيح NOCA قراءة رصيد بطاقات النقل اليابانية IC ومعاملاتها الأخيرة دون اتصال بالإنترنت. قرّب البطاقة من هاتف Android، ثم احفظها باسم وصورة من اختيارك. عند قراءتها مجددًا، يُحدّث الرصيد وسجل المعاملات تلقائيًا. يمكنك تخصيص صورة البطاقة واختيار أحد الألوان الثلاثة والوضع الفاتح أو الداكن ولغة التطبيق. تبقى جميع بيانات البطاقات على جهازك فقط.
+
+يتطلب Android 10 أو أحدث وهاتفًا بمعمارية ARM64 يدعم NFC-F.

@@ -63,5 +63,11 @@
   "card_art_hint": "Kunswerke en name beïnvloed slegs die vertoning in hierdie toepassing. Hulle verander nie die fisiese kaart of die uitreiker daarvan nie.",
   "no_cards": "Nog geen kaarte wat onthou word nie",
   "no_cards_hint": "Lees 'n fisiese vervoerkaart en kies dan om dit te onthou.",
-  "art_generic": "Verstek"
+  "art_generic": "Verstek",
+  "forget_card": "Vergeet hierdie kaart",
+  "forget_message": "Verwyder hierdie kaart en sy gestoorde transaksies van hierdie toestel?",
+  "delete": "Vee uit",
+  "choose_photo": "Kies ’n foto",
+  "storage_error": "Kon nie kaartdata stoor of laai nie. Probeer weer.",
+  "image_error": "Kon nie hierdie prent oopmaak nie. Kies ’n ander foto."
 }

@@ -63,5 +63,11 @@
   "card_art_hint": "Çeper eserler we atlar diňe bu programmanyň ekranyna täsir edýär. Fiziki kartany ýa-da emitentini üýtgetmeýärler.",
   "no_cards": "Entek ýatda galan kartoçkalar ýok",
   "no_cards_hint": "Fiziki tranzit kartasyny okaň, soňra ýatda saklamagy saýlaň.",
-  "art_generic": "Bellenen"
+  "art_generic": "Bellenen",
+  "forget_card": "Bu karty aýyr",
+  "forget_message": "Bu karty we saklanan amallaryny şu enjamdan aýyrmalymy?",
+  "delete": "Poz",
+  "choose_photo": "Surat saýla",
+  "storage_error": "Kartyň maglumatlaryny saklap ýa-da ýükläp bolmady. Gaýtadan synanyşyň.",
+  "image_error": "Bu suraty açyp bolmady. Başga surat saýlaň."
 }

@@ -63,5 +63,11 @@
   "card_art_hint": "Listaverk og nöfn hafa aðeins áhrif á skjáinn í þessu forriti. Þeir breyta ekki líkamlegu korti eða útgefanda þess.",
   "no_cards": "Engin kort manst ennþá",
   "no_cards_hint": "Lestu flutningskort og veldu síðan að muna það.",
-  "art_generic": "Sjálfgefið"
+  "art_generic": "Sjálfgefið",
+  "forget_card": "Gleyma þessu korti",
+  "forget_message": "Fjarlægja þetta kort og vistaðar færslur þess úr þessu tæki?",
+  "delete": "Eyða",
+  "choose_photo": "Velja mynd",
+  "storage_error": "Ekki tókst að vista eða hlaða kortagögnum. Reyndu aftur.",
+  "image_error": "Ekki tókst að opna myndina. Veldu aðra mynd."
 }

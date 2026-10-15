@@ -27,7 +27,13 @@
     "id": "kitaca",
     "name": "Kitaca",
     "file": "kitaca.jpg",
-    "source": "https://www.jrhokkaido.co.jp/kitaca/01about.html"
+    "source": "https://www.jrhokkaido.co.jp/kitaca/01about.html",
+    "crop": [
+      0,
+      0,
+      180,
+      113
+    ]
   },
   {
     "id": "toica",
@@ -39,7 +45,13 @@
     "id": "sugoca",
     "name": "SUGOCA",
     "file": "sugoca.png",
-    "source": "https://www.jrkyushu.co.jp/sugoca/about/kinds/"
+    "source": "https://www.jrkyushu.co.jp/sugoca/about/kinds/",
+    "crop": [
+      83,
+      135,
+      474,
+      298
+    ]
   },
   {
     "id": "nimoca",
@@ -52,5 +64,19 @@
     "name": "PiTaPa",
     "file": "pitapa.png",
     "source": "https://www.pitapa.com/"
+  },
+  {
+    "id": "manaca",
+    "name": "manaca",
+    "file": null,
+    "source": "https://manaca.meitetsu.co.jp/",
+    "color": "#F6D654"
+  },
+  {
+    "id": "hayakaken",
+    "name": "はやかけん",
+    "file": null,
+    "source": "https://subway.city.fukuoka.lg.jp/",
+    "color": "#A4DDEB"
   }
 ]

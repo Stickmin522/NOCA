@@ -9,7 +9,7 @@ extern int32_t noca_balance(const uint8_t*,size_t);
 static void fail(JNIEnv*e,const char*m){jclass c=(*e)->FindClass(e,"java/lang/IllegalArgumentException");if(c)(*e)->ThrowNew(e,c,m);}
 static jbyteArray bytes(JNIEnv*e,uint8_t*p,int32_t n){if(n<0){fail(e,"Invalid or unsupported FeliCa response");return NULL;}jbyteArray a=(*e)->NewByteArray(e,n);if(a)(*e)->SetByteArrayRegion(e,a,0,n,(jbyte*)p);return a;}
 JNIEXPORT jbyteArray JNICALL Java_app_noca_NativeCore_buildRead(JNIEnv*e,jobject o,jbyteArray id,jint service,jint start,jint count){
- (void)o;if(!id||(*e)->GetArrayLength(e,id)!=8||start<0||start>255||count<1||count>12){fail(e,"Invalid read request");return NULL;}
+ (void)o;if(!id||(*e)->GetArrayLength(e,id)!=8||service<0||service>65535||start<0||start>255||count<1||count>12){fail(e,"Invalid read request");return NULL;}
  jbyte p[8];(*e)->GetByteArrayRegion(e,id,0,8,p);uint8_t out[64];int n=noca_build_read((uint8_t*)p,(uint16_t)service,(uint8_t)start,(uint8_t)count,out,sizeof(out));return bytes(e,out,n);
 }
 JNIEXPORT jbyteArray JNICALL Java_app_noca_NativeCore_readResponse(JNIEnv*e,jobject o,jbyteArray id,jbyteArray response){
