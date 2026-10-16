@@ -724,6 +724,9 @@ private fun History(history: List<Transaction>, title: String) {
                                         yen(kotlin.math.abs(it))
                                 } ?: "—",
                                 style = MaterialTheme.typography.titleMedium,
+                                color =
+                                    if ((item.delta ?: 0) < 0) MaterialTheme.colorScheme.error
+                                    else MaterialTheme.colorScheme.onSurface,
                             )
                         }
                         if (journey != null) {

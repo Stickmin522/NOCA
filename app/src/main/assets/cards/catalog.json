@@ -8,8 +8,14 @@
   {
     "id": "suica",
     "name": "Suica",
-    "file": "suica.png",
-    "source": "https://www.jreast.co.jp/suica/ic/whats/service.html/"
+    "file": "suica.webp",
+    "source": "https://www.jreast.co.jp/suica/ic/whats/service.html/",
+    "crop": [
+      1,
+      0,
+      1577,
+      996
+    ]
   },
   {
     "id": "pasmo",
@@ -17,72 +23,106 @@
     "file": "pasmo.webp",
     "source": "https://www.pasmo.co.jp/ic-card/buy/type/",
     "crop": [
-      162,
-      98,
-      836,
-      528
+      45,
+      39,
+      1490,
+      907
     ]
   },
   {
     "id": "icoca",
     "name": "ICOCA",
-    "file": "icoca.png",
-    "source": "https://www.jr-odekake.net/icoca/about/"
+    "file": "icoca.webp",
+    "source": "https://www.jr-odekake.net/icoca/about/",
+    "crop": [
+      13,
+      27,
+      1556,
+      942
+    ]
   },
   {
     "id": "kitaca",
     "name": "Kitaca",
-    "file": "kitaca.jpg",
+    "file": "kitaca.webp",
     "source": "https://www.jrhokkaido.co.jp/kitaca/01about.html",
     "crop": [
       0,
-      0,
-      180,
-      113
+      3,
+      1579,
+      990
     ]
   },
   {
     "id": "toica",
     "name": "TOICA",
-    "file": "toica.png",
-    "source": "https://toica.jr-central.co.jp/outline/type/index.html"
+    "file": "toica.webp",
+    "source": "https://toica.jr-central.co.jp/outline/type/index.html",
+    "crop": [
+      8,
+      10,
+      1562,
+      975
+    ]
   },
   {
     "id": "sugoca",
     "name": "SUGOCA",
-    "file": "sugoca.png",
+    "file": "sugoca.webp",
     "source": "https://www.jrkyushu.co.jp/sugoca/about/kinds/",
     "crop": [
-      83,
-      135,
-      474,
-      298
+      35,
+      42,
+      1509,
+      922
     ]
   },
   {
     "id": "nimoca",
     "name": "nimoca",
-    "file": "nimoca.jpg",
-    "source": "https://www.nimoca.jp/about/type"
+    "file": "nimoca.webp",
+    "source": "https://www.nimoca.jp/about/type",
+    "crop": [
+      16,
+      17,
+      1549,
+      961
+    ]
   },
   {
     "id": "pitapa",
     "name": "PiTaPa",
-    "file": "pitapa.png",
-    "source": "https://www.pitapa.com/"
+    "file": "pitapa.webp",
+    "source": "https://www.pitapa.com/",
+    "crop": [
+      5,
+      1,
+      1570,
+      993
+    ]
   },
   {
     "id": "manaca",
     "name": "manaca",
-    "file": null,
+    "file": "manaca.webp",
     "source": "https://manaca.meitetsu.co.jp/",
-    "color": "#F6D654"
+    "crop": [
+      9,
+      5,
+      1562,
+      983
+    ]
   },
   {
     "id": "hayakaken",
     "name": "はやかけん",
-    "file": null,
+    "file": "hayakaken.webp",
     "source": "https://subway.city.fukuoka.lg.jp/",
-    "color": "#A4DDEB"
+    "crop": [
+      2,
+      1,
+      1576,
+      994
+    ]
   }
 ]

@@ -11,6 +11,7 @@ An offline NFC reader for Japanese transit IC cards, built with Rust and Jetpack
 - Remember cards with a name and artwork; scan them again to update their balance and history.
 - Keep previously read transactions on your device, even after they leave the card's history.
 - Choose a card design or import your own photo. Delete saved cards and their history at any time.
+- High-resolution card illustrations with subtle material detail, thin edges, and soft shadows.
 - Material 3 Expressive interface, ticket-shaped balance cards, and soft shadows.
 - Lime, Mist Blue, and Coral themes with light, dark, and system modes.
 - System fonts, automatic language selection, and a searchable language picker.
@@ -22,7 +23,7 @@ Language selection follows the device's preferences, with English as a fallback 
 
 Install the **arm64-v8a APK** on an NFC-F-capable phone running **Android 10 or later**. Enable NFC, open NOCA, and hold one transit card against the phone's NFC antenna. Choose **Remember this card** to add it to your wallet.
 
-The available history depends on the card. Transaction amounts are calculated only when consecutive records establish a balance change. NOCA reads card data; it does not top up cards or replace a physical transit pass.
+The available history depends on the card. Transaction amounts use the balance difference between neighbouring card history blocks, including fare deductions and top-ups. Missing blocks and an unavailable older balance are shown as a dash. NOCA reads card data; it does not top up cards or replace a physical transit pass.
 
 Station names are shown in Japanese. Unknown station codes remain visible without guessing a name; bus records do not use the rail station directory.
 

@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import org.json.JSONObject
 
-class CardRepository(context: Context) : SQLiteOpenHelper(context, "noca.db", null, 2) {
+class CardRepository(context: Context) : SQLiteOpenHelper(context, "noca.db", null, 3) {
     override fun onConfigure(db: SQLiteDatabase) {
         db.setForeignKeyConstraintsEnabled(true)
     }
@@ -19,6 +19,11 @@ class CardRepository(context: Context) : SQLiteOpenHelper(context, "noca.db", nu
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         if (oldVersion < 2) {
             db.execSQL(CardSql.MIGRATE_V2)
+            db.execSQL(CardSql.CREATE_INDEX)
+        }
+        if (oldVersion < 3) {
+            db.execSQL(CardSql.MIGRATE_V3)
+            db.execSQL(CardSql.DROP_HISTORY_INDEX)
             db.execSQL(CardSql.CREATE_INDEX)
         }
     }
@@ -53,11 +58,17 @@ class CardRepository(context: Context) : SQLiteOpenHelper(context, "noca.db", nu
                 arrayOf(id),
             )
             .use { cursor ->
-                buildList {
-                    while (cursor.moveToNext()) add(
-                        Transaction.fromJson(JSONObject(cursor.getString(0)))
-                    )
-                }
+                restoreHistoryAmounts(
+                    buildList {
+                        while (cursor.moveToNext()) add(
+                            ObservedTransaction(
+                                Transaction.fromJson(JSONObject(cursor.getString(0))),
+                                cursor.getLong(1),
+                                cursor.getInt(2),
+                            )
+                        )
+                    }
+                )
             }
 
     fun remember(snapshot: CardSnapshot, name: String, art: String) {
@@ -97,7 +108,24 @@ class CardRepository(context: Context) : SQLiteOpenHelper(context, "noca.db", nu
             ),
         )
         snapshot.history.forEachIndexed { index, record ->
-            val data = record.toJson().toString()
+            val previous =
+                db.rawQuery(CardSql.RECORD_DATA, arrayOf(snapshot.id, record.raw)).use {
+                    if (it.moveToFirst())
+                        ObservedTransaction(
+                            Transaction.fromJson(JSONObject(it.getString(0))),
+                            it.getLong(1),
+                            it.getInt(2),
+                        )
+                    else null
+                }
+            val keepPrevious = previous != null && previous.readAt > snapshot.readAt
+            val merged =
+                if (keepPrevious)
+                    previous!!.record.copy(delta = previous.record.delta ?: record.delta)
+                else record.copy(delta = record.delta ?: previous?.record?.delta)
+            val data = merged.toJson().toString()
+            val readAt = if (keepPrevious) previous!!.readAt else snapshot.readAt
+            val position = if (keepPrevious) previous!!.position else record.position ?: index
             db.execSQL(
                 CardSql.INSERT_RECORD,
                 arrayOf<Any>(
@@ -105,14 +133,23 @@ class CardRepository(context: Context) : SQLiteOpenHelper(context, "noca.db", nu
                     record.raw,
                     data,
                     record.date,
-                    record.sequence,
-                    snapshot.readAt,
-                    index,
+                    merged.sequence,
+                    readAt,
+                    position,
                 ),
             )
-            if (record.delta != null) {
-                db.execSQL(CardSql.UPDATE_RECORD, arrayOf(data, snapshot.id, record.raw))
-            }
+            db.execSQL(
+                CardSql.UPDATE_RECORD,
+                arrayOf<Any>(
+                    data,
+                    merged.sequence,
+                    readAt,
+                    position,
+                    snapshot.id,
+                    record.raw,
+                    readAt,
+                ),
+            )
         }
     }
 

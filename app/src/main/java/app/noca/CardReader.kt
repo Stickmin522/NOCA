@@ -66,6 +66,7 @@ class CardReader {
                         val block = rawHistory.copyOfRange(offset, offset + 16)
                         if (runCatching { NativeCore.decodeHistory(block) }.isSuccess)
                             valid.write(block)
+                        else valid.write(ByteArray(16))
                     }
                     Transaction.parse(NativeCore.decodeHistory(valid.toByteArray()))
                 }

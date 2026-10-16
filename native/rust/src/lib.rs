@@ -66,7 +66,7 @@ pub struct Record {
     pub in_station: u8,
     pub out_line: u8,
     pub out_station: u8,
-    pub sequence: u32,
+    pub sequence: u16,
     pub kind: &'static str,
 }
 
@@ -120,7 +120,7 @@ pub fn decode_record(block: &[u8]) -> Result<Option<Record>, Error> {
         in_station: block[7],
         out_line: block[8],
         out_station: block[9],
-        sequence: u32::from_be_bytes([0, block[12], block[13], block[14]]),
+        sequence: u16::from_be_bytes([block[13], block[14]]),
         kind,
     }))
 }
@@ -130,22 +130,23 @@ pub fn history_json(blocks: &[u8]) -> Result<String, Error> {
         return Err(Error::Length);
     }
     let mut records = Vec::new();
-    for block in blocks.chunks_exact(16) {
+    for (position, block) in blocks.chunks_exact(16).enumerate() {
         if let Some(r) = decode_record(block)? {
-            records.push(r)
+            records.push((position, r))
         }
     }
     let mut json = String::from("[");
-    for (i, r) in records.iter().enumerate() {
+    for (i, (position, r)) in records.iter().enumerate() {
         if i > 0 {
             json.push(',');
         }
-        // Only a consecutive counter establishes adjacency; gaps must never become invented fares.
+        // Service 0x090f stores newest-first history. Its neighbouring blocks establish
+        // balance changes; the transaction counter need not advance by exactly one.
         let delta = records
             .get(i + 1)
-            .filter(|p| r.sequence == ((p.sequence + 1) & 0x00ff_ffff))
-            .map(|p| r.balance as i32 - p.balance as i32);
-        write!(&mut json,"{{\"raw\":\"{}\",\"date\":\"{}\",\"balance\":{},\"process\":{},\"terminal\":{},\"region\":{},\"inLine\":{},\"inStation\":{},\"outLine\":{},\"outStation\":{},\"sequence\":{},\"kind\":\"{}\",\"delta\":{}}}",r.raw,r.date,r.balance,r.process,r.terminal,r.region,r.in_line,r.in_station,r.out_line,r.out_station,r.sequence,r.kind,delta.map_or("null".into(),|n|n.to_string())).unwrap();
+            .filter(|(p, _)| *p == position + 1)
+            .map(|(_, p)| r.balance as i32 - p.balance as i32);
+        write!(&mut json,"{{\"raw\":\"{}\",\"date\":\"{}\",\"balance\":{},\"process\":{},\"terminal\":{},\"region\":{},\"inLine\":{},\"inStation\":{},\"outLine\":{},\"outStation\":{},\"sequence\":{},\"kind\":\"{}\",\"position\":{},\"delta\":{}}}",r.raw,r.date,r.balance,r.process,r.terminal,r.region,r.in_line,r.in_station,r.out_line,r.out_station,r.sequence,r.kind,position,delta.map_or("null".into(),|n|n.to_string())).unwrap();
     }
     json.push(']');
     Ok(json)
@@ -288,7 +289,7 @@ mod tests {
         assert!(decode_record(&block((24 << 9) | (2 << 5) | 29, 0, 1)).is_ok());
     }
     #[test]
-    fn infer_only_adjacent() {
+    fn infer_changes_from_neighbouring_history_blocks() {
         let a = block((26 << 9) | (10 << 5) | 16, 4248, 9);
         let b = block((26 << 9) | (10 << 5) | 15, 4458, 8);
         let mut data = a.to_vec();
@@ -298,7 +299,7 @@ mod tests {
         assert!(j.ends_with("\"delta\":null}]"));
         data[29] = 0;
         data[30] = 3;
-        assert!(!history_json(&data).unwrap().contains("\"delta\":-210"));
+        assert!(history_json(&data).unwrap().contains("\"delta\":-210"));
     }
     #[test]
     fn empty_is_not_a_transaction() {
@@ -349,25 +350,26 @@ mod tests {
     }
 
     #[test]
-    fn history_uses_all_three_counter_bytes() {
+    fn history_counter_is_two_bytes_and_excludes_byte_twelve() {
         let mut data = block((26 << 9) | (10 << 5) | 16, 4248, 0x2345);
         data[12] = 1;
-        assert_eq!(decode_record(&data).unwrap().unwrap().sequence, 0x012345);
+        assert_eq!(decode_record(&data).unwrap().unwrap().sequence, 0x2345);
     }
 
     #[test]
-    fn nonadjacent_high_counter_bytes_never_infer_a_fare() {
+    fn byte_twelve_changes_do_not_hide_a_fare() {
         let mut newest = block((26 << 9) | (10 << 5) | 16, 1000, 2);
         newest[12] = 2;
         let mut previous = block((26 << 9) | (10 << 5) | 16, 1200, 1);
         previous[12] = 1;
         let data = [newest, previous].concat();
         let json = history_json(&data).unwrap();
-        assert_eq!(json.matches("\"delta\":null").count(), 2);
+        assert!(json.contains("\"delta\":-200"));
+        assert_eq!(json.matches("\"delta\":null").count(), 1);
     }
 
     #[test]
-    fn full_counter_rollover_preserves_adjacency() {
+    fn counter_rollover_keeps_the_balance_change() {
         let newest = block((26 << 9) | (10 << 5) | 16, 1000, 0);
         let mut previous = block((26 << 9) | (10 << 5) | 16, 1200, 0xffff);
         previous[12] = 0xff;
@@ -383,6 +385,16 @@ mod tests {
         assert!(history_json(&[newest, previous].concat())
             .unwrap()
             .contains("\"delta\":2000"));
+    }
+
+    #[test]
+    fn missing_history_slots_do_not_become_a_combined_fare() {
+        let newest = block((26 << 9) | (10 << 5) | 16, 1000, 9);
+        let oldest = block((26 << 9) | (10 << 5) | 15, 1400, 7);
+        let json = history_json(&[newest, [0; 16], oldest].concat()).unwrap();
+        assert_eq!(json.matches("\"delta\":null").count(), 2);
+        assert!(json.contains("\"position\":0"));
+        assert!(json.contains("\"position\":2"));
     }
 
     #[test]

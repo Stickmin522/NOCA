@@ -27,7 +27,7 @@ class CardDataTest {
     }
 
     @Test
-    fun transactionsRetainUnknownAmountsAndFullCounters() {
+    fun transactionsRetainUnknownAmountsAndHistoryPositions() {
         val record =
             Transaction(
                 "00112233445566778899aabbccddeeff",
@@ -35,18 +35,32 @@ class CardDataTest {
                 4248,
                 "transit",
                 null,
-                0x123456,
+                0x3456,
                 1,
                 1,
                 2,
                 3,
                 4,
                 0,
+                2,
             )
         val restored = Transaction.parse("[${record.toJson()}]").single()
         assertEquals(record, restored)
         assertTrue(record.toJson().isNull("delta"))
-        assertEquals(0x123456, restored.sequence)
+        assertEquals(0x3456, restored.sequence)
+        assertEquals(2, restored.position)
+    }
+
+    @Test
+    fun legacyCounterValuesAreNormalizedWithoutLosingCardBytes() {
+        val json =
+            JSONObject(
+                """{"raw":"16010000354f0101010703e891123400","date":"2026-10-16","balance":1000,"kind":"transit","delta":null,"sequence":9507380,"process":1,"inLine":1,"inStation":1,"outLine":1,"outStation":7,"region":0}"""
+            )
+        val record = Transaction.fromJson(json)
+        assertEquals(json.getString("raw"), record.raw)
+        assertEquals(json.getInt("sequence") and 0xffff, record.sequence)
+        assertNull(record.position)
     }
 
     @Test

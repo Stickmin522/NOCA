@@ -16,6 +16,7 @@ data class Transaction(
     val outLine: Int,
     val outStation: Int,
     val region: Int,
+    val position: Int? = null,
 ) {
     val terminal: Int
         get() = raw.take(2).toIntOrNull(16) ?: -1
@@ -37,6 +38,7 @@ data class Transaction(
             .put("outLine", outLine)
             .put("outStation", outStation)
             .put("region", region)
+            .put("position", position ?: JSONObject.NULL)
 
     companion object {
         fun fromJson(o: JSONObject) =
@@ -46,13 +48,14 @@ data class Transaction(
                 o.getInt("balance"),
                 o.getString("kind"),
                 if (o.isNull("delta")) null else o.getInt("delta"),
-                o.getInt("sequence"),
+                o.getInt("sequence") and 0xffff,
                 o.getInt("process"),
                 o.getInt("inLine"),
                 o.getInt("inStation"),
                 o.getInt("outLine"),
                 o.getInt("outStation"),
                 o.getInt("region"),
+                if (o.isNull("position")) null else o.getInt("position"),
             )
 
         fun parse(text: String): List<Transaction> {

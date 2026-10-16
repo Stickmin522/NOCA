@@ -44,23 +44,23 @@ class CardStorageTest {
     }
 
     @Test
-    fun repeatedRecordsAreDeduplicatedAndFullCountersSortCorrectly() {
+    fun repeatedRecordsAreDeduplicatedAndCardOrderSurvivesCounterRollover() {
         execute(CardSql.INSERT_RECORD, "card", "older", "older-data", "2026-10-16", 65535, 10, 0)
-        execute(CardSql.INSERT_RECORD, "card", "newer", "newer-data", "2026-10-16", 65536, 20, 0)
+        execute(CardSql.INSERT_RECORD, "card", "newer", "newer-data", "2026-10-16", 0, 20, 0)
         execute(CardSql.INSERT_RECORD, "card", "older", "duplicate", "2026-10-16", 65535, 20, 1)
         assertEquals(
-            listOf(listOf("newer-data"), listOf("older-data")),
-            query(CardSql.HISTORY, "card"),
+            listOf("newer-data", "older-data"),
+            query(CardSql.HISTORY, "card").map { it.first() },
         )
     }
 
     @Test
-    fun enrichingARecordPreservesItsOriginalArrivalPosition() {
+    fun rescanningUsesTheLatestObservedHistoryPosition() {
         execute(CardSql.INSERT_RECORD, "card", "record", "unknown", "2026-10-16", 7, 10, 2)
         execute(CardSql.INSERT_RECORD, "card", "record", "known", "2026-10-16", 7, 20, 0)
-        execute(CardSql.UPDATE_RECORD, "known", "card", "record")
+        execute(CardSql.UPDATE_RECORD, "known", 7, 20, 0, "card", "record", 20)
         assertEquals(
-            listOf("known", "10", "2"),
+            listOf("known", "20", "0"),
             query("SELECT data,read_at,position FROM records").single(),
         )
     }
@@ -106,7 +106,32 @@ class CardStorageTest {
             listOf("card", "Commute", "suica", "4248", "10", "0"),
             query(CardSql.CARDS).single(),
         )
-        assertEquals(listOf(listOf("saved")), query(CardSql.HISTORY, "card"))
+        assertEquals(listOf("saved"), query(CardSql.HISTORY, "card").map { it.first() })
+    }
+
+    @Test
+    fun versionThreeMigrationNormalizesCountersAndKeepsAllHistory() {
+        execute(CardSql.INSERT_RECORD, "card", "a", "first", "2026-10-16", 0x800007, 10, 0)
+        execute(CardSql.INSERT_RECORD, "card", "b", "second", "2026-10-16", 0x400006, 10, 1)
+        execute(CardSql.MIGRATE_V3)
+        execute(CardSql.DROP_HISTORY_INDEX)
+        execute(CardSql.CREATE_INDEX)
+        assertEquals(
+            listOf(listOf("7"), listOf("6")),
+            query("SELECT sequence FROM records ORDER BY position"),
+        )
+        assertEquals(listOf("first", "second"), query(CardSql.HISTORY, "card").map { it.first() })
+        assertEquals("1000", query(CardSql.CARDS).single()[3])
+    }
+
+    @Test
+    fun olderSnapshotsCannotChangeANewerHistoryPosition() {
+        execute(CardSql.INSERT_RECORD, "card", "r", "current", "2026-10-16", 10, 30, 2)
+        execute(CardSql.UPDATE_RECORD, "stale", 10, 20, 0, "card", "r", 20)
+        assertEquals(
+            listOf("current", "30", "2"),
+            query("SELECT data,read_at,position FROM records").single(),
+        )
     }
 
     private fun execute(sql: String, vararg values: Any?) {

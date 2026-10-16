@@ -1,6 +1,6 @@
 # Artwork credits
 
-Transit-card names, images, and trademarks belong to their respective issuers. NOCA is an independent application and is not affiliated with these issuers. The MIT license covers the application source code, not third-party card artwork.
+Transit-card names, logos, mascots, and designs belong to their respective issuers. The bundled high-resolution illustrations follow the issuer designs listed below, with subtle plastic shading and edge detail. NOCA is an independent application and is not affiliated with these issuers. The MIT license covers the application source code, not issuer trademarks or card designs.
 
 | Card | Source |
 | --- | --- |
@@ -12,5 +12,7 @@ Transit-card names, images, and trademarks belong to their respective issuers. N
 | SUGOCA | https://www.jrkyushu.co.jp/sugoca/about/kinds/ |
 | nimoca | https://www.nimoca.jp/about/type |
 | PiTaPa | https://www.pitapa.com/ |
+| manaca | https://manaca.meitetsu.co.jp/ |
+| Hayakaken | https://subway.city.fukuoka.lg.jp/ |
 
-The manaca and Hayakaken options use simple color styles rather than issuer artwork. An artwork choice changes only the card's appearance in NOCA; it does not identify its issuer or enable support for its payment services.
+An artwork choice changes only the card's appearance in NOCA; it does not identify its issuer or enable support for its payment services.
