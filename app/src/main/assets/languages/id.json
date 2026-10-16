@@ -71,5 +71,8 @@
   "storage_error": "Tidak dapat menyimpan atau memuat data kartu. Coba lagi.",
   "image_error": "Tidak dapat membuka gambar ini. Pilih foto lain.",
   "unknown_station": "Stasiun tidak dikenal",
-  "bus": "Perjalanan bus"
+  "bus": "Perjalanan bus",
+  "scan_feedback": "Umpan balik pembacaan",
+  "scan_sound": "Suara pembacaan",
+  "scan_sound_hint": "Dua bunyi pendek saat berhasil; satu bunyi panjang saat gagal"
 }

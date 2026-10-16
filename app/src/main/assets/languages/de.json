@@ -71,5 +71,8 @@
   "storage_error": "Kartendaten konnten nicht gespeichert oder geladen werden. Bitte erneut versuchen.",
   "image_error": "Dieses Bild konnte nicht geöffnet werden. Bitte ein anderes Foto auswählen.",
   "unknown_station": "Unbekannter Bahnhof",
-  "bus": "Busfahrt"
+  "bus": "Busfahrt",
+  "scan_feedback": "Rückmeldung beim Lesen",
+  "scan_sound": "Lesetöne",
+  "scan_sound_hint": "Zwei kurze Töne bei Erfolg; ein langer Ton bei einem Fehler"
 }

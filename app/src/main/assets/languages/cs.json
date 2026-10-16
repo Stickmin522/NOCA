@@ -71,5 +71,8 @@
   "storage_error": "Data karty se nepodařilo uložit nebo načíst. Zkuste to znovu.",
   "image_error": "Obrázek nelze otevřít. Vyberte jinou fotografii.",
   "unknown_station": "Neznámá stanice",
-  "bus": "Cesta autobusem"
+  "bus": "Cesta autobusem",
+  "scan_feedback": "Odezva při čtení",
+  "scan_sound": "Zvuky při čtení",
+  "scan_sound_hint": "Dvě krátká pípnutí při úspěchu; jedno dlouhé při chybě"
 }

@@ -71,5 +71,8 @@
   "storage_error": "Não foi possível guardar ou carregar os dados do cartão. Tente novamente.",
   "image_error": "Não foi possível abrir a imagem. Escolha outra fotografia.",
   "unknown_station": "Estação desconhecida",
-  "bus": "Viagem de autocarro"
+  "bus": "Viagem de autocarro",
+  "scan_feedback": "Avisos de leitura",
+  "scan_sound": "Sons de leitura",
+  "scan_sound_hint": "Dois bipes curtos ao ler; um longo em caso de falha"
 }

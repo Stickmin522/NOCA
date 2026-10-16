@@ -71,5 +71,8 @@
   "storage_error": "Methu cadw neu lwytho data’r cerdyn. Rhowch gynnig arall arni.",
   "image_error": "Methu agor y ddelwedd. Dewiswch lun arall.",
   "unknown_station": "Gorsaf anhysbys",
-  "bus": "Taith bws"
+  "bus": "Taith bws",
+  "scan_feedback": "Adborth darllen",
+  "scan_sound": "Synau darllen",
+  "scan_sound_hint": "Dau bîp byr ar lwyddiant; un bîp hir ar fethiant"
 }

@@ -71,5 +71,8 @@
   "storage_error": "Kart verileri kaydedilemedi veya yüklenemedi. Tekrar deneyin.",
   "image_error": "Bu görüntü açılamadı. Başka bir fotoğraf seçin.",
   "unknown_station": "Bilinmeyen istasyon",
-  "bus": "Otobüs yolculuğu"
+  "bus": "Otobüs yolculuğu",
+  "scan_feedback": "Okuma bildirimleri",
+  "scan_sound": "Okuma sesleri",
+  "scan_sound_hint": "Başarılı okumada iki kısa, hatada bir uzun bip"
 }

@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CreditCard
 import androidx.compose.material3.Icon
@@ -21,12 +20,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathOperation
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import java.io.File
@@ -42,6 +52,7 @@ data class CardArtwork(
     val source: String?,
     val color: String? = null,
     val crop: List<Int>? = null,
+    val notched: Boolean = false,
 ) {
     companion object {
         fun fromJson(j: JSONObject) =
@@ -52,10 +63,41 @@ data class CardArtwork(
                 nullable(j, "source"),
                 nullable(j, "color"),
                 j.optJSONArray("crop")?.let { a -> (0 until a.length()).map { a.getInt(it) } },
+                j.optBoolean("notched", false),
             )
 
         private fun nullable(j: JSONObject, key: String) =
             if (j.isNull(key)) null else j.optString(key).takeIf { it.isNotBlank() }
+    }
+}
+
+private const val CARD_ASPECT_RATIO = 85.60f / 53.98f
+
+private class TransitCardShape(private val notched: Boolean) : Shape {
+    override fun createOutline(
+        size: Size,
+        layoutDirection: LayoutDirection,
+        density: Density,
+    ): Outline {
+        val w = size.width
+        val h = size.height
+        val radius = h * (3.18f / 53.98f)
+        val card =
+            Path().apply {
+                addRoundRect(RoundRect(Rect(Offset.Zero, size), CornerRadius(radius)))
+            }
+        if (!notched) return Outline.Generic(card)
+        // The shallow orientation cut follows the lower right edge of the physical card.
+        val cut =
+            Path().apply {
+                moveTo(w + 1f, h * .68f)
+                lineTo(w, h * .68f)
+                cubicTo(w, h * .715f, w * .986f, h * .72f, w * .986f, h * .745f)
+                cubicTo(w * .986f, h * .80f, w, h * .90f, w, h * .94f)
+                lineTo(w + 1f, h * .94f)
+                close()
+            }
+        return Outline.Generic(Path.combine(PathOperation.Difference, card, cut))
     }
 }
 
@@ -70,10 +112,10 @@ fun CardArt(id: String, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val art = remember(context, id) { artworks(context).firstOrNull { it.id == id } }
     var targetWidth by remember { mutableIntStateOf(0) }
-    val shape = RoundedCornerShape(percent = 6)
+    val shape = remember(art?.notched) { TransitCardShape(art?.notched == true) }
     val display =
         modifier
-            .aspectRatio(1.586f)
+            .aspectRatio(CARD_ASPECT_RATIO)
             .onSizeChanged { targetWidth = it.width }
             .shadow(
                 6.dp,

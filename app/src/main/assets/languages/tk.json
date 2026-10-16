@@ -71,5 +71,8 @@
   "storage_error": "Kartyň maglumatlaryny saklap ýa-da ýükläp bolmady. Gaýtadan synanyşyň.",
   "image_error": "Bu suraty açyp bolmady. Başga surat saýlaň.",
   "unknown_station": "Näbelli duralga",
-  "bus": "Awtobus sapary"
+  "bus": "Awtobus sapary",
+  "scan_feedback": "Okalyş duýduryşlary",
+  "scan_sound": "Okalyş sesleri",
+  "scan_sound_hint": "Üstünlikde iki gysga ses; şowsuzlykda bir uzyn ses"
 }

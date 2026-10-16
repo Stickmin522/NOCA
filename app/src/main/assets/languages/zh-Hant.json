@@ -71,5 +71,8 @@
   "storage_error": "無法儲存或載入卡片資料，請重試。",
   "image_error": "無法開啟這張圖片，請選擇其他照片。",
   "unknown_station": "未知車站",
-  "bus": "巴士乘車"
+  "bus": "巴士乘車",
+  "scan_feedback": "讀卡回饋",
+  "scan_sound": "讀卡提示音",
+  "scan_sound_hint": "成功時兩聲短嗶，失敗時一聲長嗶"
 }

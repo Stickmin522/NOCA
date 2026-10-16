@@ -71,5 +71,8 @@
   "storage_error": "无法保存或加载卡片数据，请重试。",
   "image_error": "无法打开这张图片，请选择其他照片。",
   "unknown_station": "未知车站",
-  "bus": "公交乘车"
+  "bus": "公交乘车",
+  "scan_feedback": "读卡反馈",
+  "scan_sound": "读卡提示音",
+  "scan_sound_hint": "成功时两声短滴，失败时一声长滴"
 }

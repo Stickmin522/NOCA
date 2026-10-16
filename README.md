@@ -12,10 +12,11 @@ An offline NFC reader for Japanese transit IC cards, built with Rust and Jetpack
 - Keep previously read transactions on your device, even after they leave the card's history.
 - Choose a card design or import your own photo. Delete saved cards and their history at any time.
 - High-resolution card illustrations with subtle material detail, thin edges, and soft shadows.
-- Material 3 Expressive interface, ticket-shaped balance cards, and soft shadows.
+- Material 3 Expressive interface with raised buttons, press feedback, and ticket-shaped balances.
 - Lime, Mist Blue, and Coral themes with light, dark, and system modes.
 - System fonts, automatic language selection, and a searchable language picker.
 - Tap the balance to return to the animated contactless reading prompt.
+- A full-turn reading animation leads into the balance. Optional sounds play two short beeps for success and one long beep for failure.
 
 Language selection follows the device's preferences, with English as a fallback when a translation is unavailable.
 

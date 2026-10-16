@@ -71,5 +71,8 @@
   "storage_error": "Impossibile salvare o caricare i dati della carta. Riprova.",
   "image_error": "Impossibile aprire l’immagine. Scegli un’altra foto.",
   "unknown_station": "Stazione sconosciuta",
-  "bus": "Viaggio in autobus"
+  "bus": "Viaggio in autobus",
+  "scan_feedback": "Avvisi di lettura",
+  "scan_sound": "Suoni di lettura",
+  "scan_sound_hint": "Due bip brevi se la lettura riesce; uno lungo in caso di errore"
 }

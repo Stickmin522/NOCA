@@ -97,7 +97,13 @@ enum class ThemeMode {
 data class Preferences(
     val color: ThemeColor = ThemeColor.LIME,
     val mode: ThemeMode = ThemeMode.SYSTEM,
+    val soundEnabled: Boolean = true,
 )
+
+enum class ReadFeedback {
+    SUCCESS,
+    FAILURE,
+}
 
 data class UiState(
     val cards: List<SavedCard> = emptyList(),

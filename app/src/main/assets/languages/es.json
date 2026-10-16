@@ -71,5 +71,8 @@
   "storage_error": "No se pudieron guardar o cargar los datos de la tarjeta. Inténtalo de nuevo.",
   "image_error": "No se pudo abrir esta imagen. Elige otra foto.",
   "unknown_station": "Estación desconocida",
-  "bus": "Trayecto en autobús"
+  "bus": "Trayecto en autobús",
+  "scan_feedback": "Avisos de lectura",
+  "scan_sound": "Sonidos de lectura",
+  "scan_sound_hint": "Dos pitidos cortos al leer; uno largo si falla"
 }

@@ -71,5 +71,8 @@
   "storage_error": "Ezin izan dira txartelaren datuak gorde edo kargatu. Saiatu berriro.",
   "image_error": "Ezin izan da irudia ireki. Aukeratu beste argazki bat.",
   "unknown_station": "Geltoki ezezaguna",
-  "bus": "Autobus-bidaia"
+  "bus": "Autobus-bidaia",
+  "scan_feedback": "Irakurketaren abisuak",
+  "scan_sound": "Irakurketaren soinuak",
+  "scan_sound_hint": "Bi bip labur ondo irakurtzean; bip luze bat huts egitean"
 }

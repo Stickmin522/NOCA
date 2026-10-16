@@ -35,6 +35,8 @@ for art in artworks:
     if "crop" in art:
         assert len(art["crop"]) == 4 and all(isinstance(n, int) for n in art["crop"])
         assert min(art["crop"]) >= 0 and min(art["crop"][2:]) > 0
+    if "notched" in art:
+        assert isinstance(art["notched"], bool), "Invalid card edge shape"
 
 with (assets / "stations/stations.tsv").open(encoding="utf-8", newline="") as stream:
     stations = list(csv.DictReader(stream, delimiter="\t"))

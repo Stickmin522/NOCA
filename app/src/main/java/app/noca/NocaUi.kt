@@ -10,14 +10,23 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.KeyboardActions
@@ -29,6 +38,8 @@ import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.outlined.ReceiptLong
+import androidx.compose.material.icons.automirrored.outlined.VolumeOff
+import androidx.compose.material.icons.automirrored.outlined.VolumeUp
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -145,6 +156,10 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
     val selectedCard = state.cards.firstOrNull { it.id == selected }
     val currentSaved = state.cards.firstOrNull { it.id == state.current?.id }
     val haptic = LocalHapticFeedback.current
+    var completedReadAt by rememberSaveable { mutableLongStateOf(state.current?.readAt ?: 0L) }
+    val completionRotation = remember { Animatable(0f) }
+    val completing = state.current != null && completedReadAt != state.current.readAt
+    val scanSnapshot = state.current?.takeIf { it.readAt == completedReadAt }
     val rescan = {
         vm.rescan()
         selected = null
@@ -162,7 +177,16 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
         }
     }
     LaunchedEffect(state.current?.readAt) {
-        if (state.current != null) haptic.performHapticFeedback(HapticFeedbackType.Confirm)
+        val readAt = state.current?.readAt
+        if (readAt == null) {
+            completedReadAt = 0L
+            completionRotation.snapTo(0f)
+        } else if (readAt != completedReadAt) {
+            haptic.performHapticFeedback(HapticFeedbackType.Confirm)
+            completionRotation.snapTo(0f)
+            completionRotation.animateTo(360f, tween(720, easing = FastOutSlowInEasing))
+            completedReadAt = readAt
+        }
     }
     BackHandler(selected != null || page != Page.SCAN) {
         if (selected != null) selected = null else page = Page.SCAN
@@ -201,7 +225,7 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(start = 10.dp).weight(1f),
                 )
-                FilledTonalIconButton(
+                NocaIconButton(
                     onClick = {
                         if (selectedCard != null) editDialog = true
                         else {
@@ -227,7 +251,10 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                     color = MaterialTheme.colorScheme.surface,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Row(Modifier.padding(6.dp)) {
+                    Row(
+                        Modifier.padding(6.dp),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    ) {
                         val nav =
                             listOf(
                                 Triple(Page.SCAN, "scan", NocaIcons.Contactless),
@@ -236,16 +263,28 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                             )
                         nav.forEach { (target, key, icon) ->
                             val active = page == target
+                            val interaction = remember { MutableInteractionSource() }
+                            val shape = RoundedCornerShape(25.dp)
                             Surface(
-                                shape = RoundedCornerShape(25.dp),
-                                color =
-                                    if (active) LocalNocaColors.current.accent
-                                    else Color.Transparent,
+                                shape = shape,
+                                color = Color.Transparent,
                                 modifier =
-                                    Modifier.weight(1f).clickable {
-                                        selected = null
-                                        page = target
-                                    },
+                                    Modifier.weight(1f)
+                                        .raisedFace(
+                                            if (active) LocalNocaColors.current.accent
+                                            else LocalNocaColors.current.surface,
+                                            shape,
+                                            interaction,
+                                        )
+                                        .clip(shape)
+                                        .clickable(
+                                            interactionSource = interaction,
+                                            indication = ripple(),
+                                            role = Role.Tab,
+                                        ) {
+                                            selected = null
+                                            page = target
+                                        },
                             ) {
                                 Column(
                                     Modifier.padding(horizontal = 6.dp, vertical = 10.dp),
@@ -299,7 +338,7 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                         rescan,
                     )
                     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        FilledTonalButton(
+                        NocaButton(
                             onClick = rescan,
                             modifier = Modifier.weight(1f),
                         ) {
@@ -307,7 +346,7 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                             Spacer(Modifier.width(7.dp))
                             Text(t["rescan"])
                         }
-                        FilledTonalButton(
+                        NocaButton(
                             onClick = { editDialog = true },
                             modifier = Modifier.weight(1f),
                         ) {
@@ -367,15 +406,26 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                                             t[if (!state.nfcAvailable) "nfc_missing" else "nfc_off"]
                                         )
                                         if (state.nfcAvailable)
-                                            Button(onClick = openNfc) { Text(t["open_nfc"]) }
+                                            NocaButton(onClick = openNfc) { Text(t["open_nfc"]) }
                                     }
                                 }
                             }
-                            AnimatedContent(targetState = state.current, label = "read-result") {
-                                snapshot ->
+                            AnimatedContent(
+                                targetState = scanSnapshot,
+                                transitionSpec = {
+                                    (fadeIn(tween(220)) +
+                                        scaleIn(tween(220), initialScale = .96f)) togetherWith
+                                        fadeOut(tween(140))
+                                },
+                                label = "read-result",
+                            ) { snapshot ->
                                 if (snapshot == null) {
                                     if (state.nfcAvailable && state.nfcEnabled)
-                                        WaitingPanel(state.reading)
+                                        WaitingPanel(
+                                            state.reading,
+                                            completing || state.current != null,
+                                            completionRotation.value,
+                                        )
                                 } else
                                     BalanceTicket(
                                         snapshot.balance,
@@ -384,10 +434,10 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                                         rescan,
                                     )
                             }
-                            if (state.current != null) {
-                                FilledTonalButton(
+                            if (scanSnapshot != null) {
+                                NocaButton(
                                     onClick = {
-                                        if (currentSaved == null) pendingSave = state.current
+                                        if (currentSaved == null) pendingSave = scanSnapshot
                                         else {
                                             selected = currentSaved.id
                                             page = Page.WALLET
@@ -413,13 +463,13 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                                         style = MaterialTheme.typography.labelMedium,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
-                                if (state.current.partial)
+                                if (scanSnapshot.partial)
                                     Text(
                                         t["partial_history"],
                                         style = MaterialTheme.typography.bodySmall,
                                     )
                             }
-                            History(state.current?.history.orEmpty(), t["recent"])
+                            History(scanSnapshot?.history.orEmpty(), t["recent"])
                         }
                     Page.WALLET ->
                         Column(
@@ -525,15 +575,19 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
 }
 
 @Composable
-private fun WaitingPanel(reading: Boolean) {
+private fun WaitingPanel(reading: Boolean, completing: Boolean, rotation: Float) {
     val t = texts()
     val c = LocalNocaColors.current
     Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-        Surface(
-            shape = MaterialShapes.Cookie9Sided.toShape(),
-            color = c.accent,
+        Box(
             modifier = Modifier.widthIn(max = 300.dp).fillMaxWidth().aspectRatio(1f),
+            contentAlignment = Alignment.Center,
         ) {
+            Surface(
+                shape = MaterialShapes.Cookie9Sided.toShape(),
+                color = c.accent,
+                modifier = Modifier.fillMaxSize().graphicsLayer { rotationZ = rotation },
+            ) {}
             Column(
                 Modifier.padding(horizontal = 44.dp, vertical = 36.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -542,14 +596,21 @@ private fun WaitingPanel(reading: Boolean) {
                 AnimatedContactlessIcon(color = c.ink)
                 Spacer(Modifier.height(12.dp))
                 Text(
-                    t[if (reading) "reading" else "waiting"],
+                    t[if (completing) "read_success" else if (reading) "reading" else "waiting"],
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = c.ink,
                     textAlign = TextAlign.Center,
                 )
                 Spacer(Modifier.height(10.dp))
-                if (reading)
+                if (completing)
+                    Icon(
+                        Icons.Outlined.CheckCircle,
+                        null,
+                        tint = c.ink,
+                        modifier = Modifier.size(22.dp),
+                    )
+                else if (reading)
                     LinearProgressIndicator(
                         Modifier.width(100.dp),
                         color = c.ink,
@@ -872,16 +933,28 @@ private fun SettingsScreen(p: Preferences, vm: NocaViewModel, language: () -> Un
                         ThemeColor.MIST -> Color(0xffbfd3fa)
                         ThemeColor.CORAL -> Color(0xffffb09b)
                     }
+                val interaction = remember { MutableInteractionSource() }
+                val shape = RoundedCornerShape(22.dp)
                 Surface(
-                    shape = RoundedCornerShape(22.dp),
-                    color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                    shape = shape,
+                    color = Color.Transparent,
                     border =
                         BorderStroke(
                             if (p.color == color) 2.dp else 1.dp,
                             if (p.color == color) MaterialTheme.colorScheme.onSurface
                             else MaterialTheme.colorScheme.outlineVariant,
                         ),
-                    modifier = Modifier.weight(1f).clickable { vm.color(color) },
+                    modifier =
+                        Modifier.weight(1f)
+                            .raisedFace(
+                                MaterialTheme.colorScheme.surfaceContainerHigh,
+                                shape,
+                                interaction,
+                            )
+                            .clip(shape)
+                            .clickable(interactionSource = interaction, indication = ripple()) {
+                                vm.color(color)
+                            },
                 ) {
                     Column(
                         Modifier.padding(horizontal = 7.dp, vertical = 17.dp),
@@ -907,6 +980,36 @@ private fun SettingsScreen(p: Preferences, vm: NocaViewModel, language: () -> Un
                         )
                     }
                 }
+            }
+        }
+        Text(t["scan_feedback"], style = MaterialTheme.typography.titleSmall)
+        SoftPanel {
+            Row(
+                Modifier.fillMaxWidth()
+                    .toggleable(
+                        value = p.soundEnabled,
+                        role = Role.Switch,
+                        onValueChange = vm::sound,
+                    )
+                    .padding(17.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Icon(
+                    if (p.soundEnabled) Icons.AutoMirrored.Outlined.VolumeUp
+                    else Icons.AutoMirrored.Outlined.VolumeOff,
+                    null,
+                    Modifier.size(22.dp),
+                )
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(t["scan_sound"], style = MaterialTheme.typography.bodyLarge)
+                    Text(
+                        t["scan_sound_hint"],
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Switch(checked = p.soundEnabled, onCheckedChange = null)
             }
         }
         Text(
@@ -965,7 +1068,7 @@ private fun CardNameDialog(
             )
         },
         confirmButton = {
-            TextButton(onClick = { save(name.trim()) }, enabled = name.isNotBlank()) {
+            NocaButton(onClick = { save(name.trim()) }, enabled = name.isNotBlank()) {
                 Text(t["save"])
             }
         },
@@ -1056,7 +1159,7 @@ private fun CardEditor(
                         repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
                     }
                 }
-                OutlinedButton(
+                NocaButton(
                     onClick = { picker.launch("image/*") },
                     enabled = !importing,
                     modifier = Modifier.fillMaxWidth(),
@@ -1070,7 +1173,7 @@ private fun CardEditor(
             }
         },
         confirmButton = {
-            TextButton(
+            NocaButton(
                 onClick = { save(name.trim(), art) },
                 enabled = name.isNotBlank() && !importing,
             ) {

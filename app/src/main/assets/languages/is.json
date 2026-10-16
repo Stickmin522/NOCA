@@ -71,5 +71,8 @@
   "storage_error": "Ekki tókst að vista eða hlaða kortagögnum. Reyndu aftur.",
   "image_error": "Ekki tókst að opna myndina. Veldu aðra mynd.",
   "unknown_station": "Óþekkt stöð",
-  "bus": "Strætóferð"
+  "bus": "Strætóferð",
+  "scan_feedback": "Endurgjöf við lestur",
+  "scan_sound": "Hljóð við lestur",
+  "scan_sound_hint": "Tvö stutt píp við árangur; eitt langt píp við villu"
 }

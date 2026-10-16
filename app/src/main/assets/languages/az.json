@@ -71,5 +71,8 @@
   "storage_error": "Kart məlumatları saxlanıla və ya yüklənə bilmədi. Yenidən cəhd edin.",
   "image_error": "Şəkil açıla bilmədi. Başqa şəkil seçin.",
   "unknown_station": "Naməlum stansiya",
-  "bus": "Avtobus səfəri"
+  "bus": "Avtobus səfəri",
+  "scan_feedback": "Oxuma bildirişləri",
+  "scan_sound": "Oxuma səsləri",
+  "scan_sound_hint": "Uğurlu olduqda iki qısa, xəta olduqda bir uzun siqnal"
 }

@@ -11,11 +11,12 @@
     "file": "suica.webp",
     "source": "https://www.jreast.co.jp/suica/ic/whats/service.html/",
     "crop": [
-      1,
+      0,
       0,
       1577,
-      996
-    ]
+      997
+    ],
+    "notched": true
   },
   {
     "id": "pasmo",
@@ -27,7 +28,8 @@
       39,
       1490,
       907
-    ]
+    ],
+    "notched": true
   },
   {
     "id": "icoca",
@@ -63,7 +65,8 @@
       10,
       1562,
       975
-    ]
+    ],
+    "notched": true
   },
   {
     "id": "sugoca",

@@ -12,7 +12,9 @@ import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -37,10 +39,13 @@ class NocaViewModel(app: Application) : AndroidViewModel(app) {
                             .getOrDefault(ThemeColor.LIME),
                         runCatching { ThemeMode.valueOf(preferences.getString("mode", "SYSTEM")!!) }
                             .getOrDefault(ThemeMode.SYSTEM),
+                        preferences.getBoolean("sound_enabled", true),
                     )
             )
         )
     val state = mutable.asStateFlow()
+    private val mutableFeedback = MutableSharedFlow<ReadFeedback>(extraBufferCapacity = 8)
+    val feedback = mutableFeedback.asSharedFlow()
 
     init {
         viewModelScope.coroutineContext[Job]?.invokeOnCompletion { repository.close() }
@@ -74,6 +79,7 @@ class NocaViewModel(app: Application) : AndroidViewModel(app) {
                         }
                         lastId = snapshot.id
                         lastReadAt = now
+                        mutableFeedback.tryEmit(ReadFeedback.SUCCESS)
                     }
                 }
             } catch (cancelled: CancellationException) {
@@ -88,6 +94,7 @@ class NocaViewModel(app: Application) : AndroidViewModel(app) {
                         else -> "invalid_card_data"
                     }
                 mutable.update { it.copy(error = key) }
+                mutableFeedback.tryEmit(ReadFeedback.FAILURE)
             } finally {
                 mutable.update { it.copy(reading = false) }
                 reading.set(false)
@@ -166,6 +173,11 @@ class NocaViewModel(app: Application) : AndroidViewModel(app) {
     fun mode(value: ThemeMode) {
         preferences.edit().putString("mode", value.name).apply()
         mutable.update { it.copy(preferences = it.preferences.copy(mode = value)) }
+    }
+
+    fun sound(enabled: Boolean) {
+        preferences.edit().putBoolean("sound_enabled", enabled).apply()
+        mutable.update { it.copy(preferences = it.preferences.copy(soundEnabled = enabled)) }
     }
 
     private fun changeCards(action: () -> Unit) =

@@ -71,5 +71,8 @@
   "storage_error": "Korttitietojen tallennus tai lataus epäonnistui. Yritä uudelleen.",
   "image_error": "Kuvaa ei voitu avata. Valitse toinen kuva.",
   "unknown_station": "Tuntematon asema",
-  "bus": "Bussimatka"
+  "bus": "Bussimatka",
+  "scan_feedback": "Lukemisen palaute",
+  "scan_sound": "Lukuäänet",
+  "scan_sound_hint": "Kaksi lyhyttä piippausta onnistumisesta, yksi pitkä virheestä"
 }

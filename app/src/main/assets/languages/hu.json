@@ -71,5 +71,8 @@
   "storage_error": "A kártyaadatok mentése vagy betöltése sikertelen. Próbálja újra.",
   "image_error": "A kép nem nyitható meg. Válasszon másik fényképet.",
   "unknown_station": "Ismeretlen állomás",
-  "bus": "Buszos utazás"
+  "bus": "Buszos utazás",
+  "scan_feedback": "Olvasási visszajelzés",
+  "scan_sound": "Olvasási hangok",
+  "scan_sound_hint": "Siker esetén két rövid, hiba esetén egy hosszú hangjelzés"
 }

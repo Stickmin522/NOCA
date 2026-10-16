@@ -71,5 +71,8 @@
   "storage_error": "Podatkov kartice ni bilo mogoče shraniti ali naložiti. Poskusite znova.",
   "image_error": "Slike ni bilo mogoče odpreti. Izberite drugo fotografijo.",
   "unknown_station": "Neznana postaja",
-  "bus": "Vožnja z avtobusom"
+  "bus": "Vožnja z avtobusom",
+  "scan_feedback": "Odziv pri branju",
+  "scan_sound": "Zvoki pri branju",
+  "scan_sound_hint": "Dva kratka piska ob uspehu; en dolg pisk ob napaki"
 }

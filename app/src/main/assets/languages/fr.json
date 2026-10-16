@@ -71,5 +71,8 @@
   "storage_error": "Impossible d’enregistrer ou de charger les données de la carte. Réessayez.",
   "image_error": "Impossible d’ouvrir cette image. Choisissez une autre photo.",
   "unknown_station": "Gare inconnue",
-  "bus": "Trajet en bus"
+  "bus": "Trajet en bus",
+  "scan_feedback": "Retour de lecture",
+  "scan_sound": "Sons de lecture",
+  "scan_sound_hint": "Deux bips courts en cas de réussite ; un bip long en cas d’échec"
 }

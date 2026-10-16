@@ -71,5 +71,8 @@
   "storage_error": "Hindi ma-save o ma-load ang data ng card. Subukan muli.",
   "image_error": "Hindi mabuksan ang larawang ito. Pumili ng iba.",
   "unknown_station": "Hindi kilalang istasyon",
-  "bus": "Biyahe sa bus"
+  "bus": "Biyahe sa bus",
+  "scan_feedback": "Mga abiso sa pagbasa",
+  "scan_sound": "Mga tunog sa pagbasa",
+  "scan_sound_hint": "Dalawang maikling beep kapag matagumpay; isang mahaba kapag nabigo"
 }

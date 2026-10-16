@@ -12,15 +12,34 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: NocaViewModel by viewModels()
     private val adapter by lazy { NfcAdapter.getDefaultAdapter(this) }
+    private val scanSound = ScanSoundPlayer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.state
+                    .map { it.preferences.soundEnabled }
+                    .distinctUntilChanged()
+                    .collectLatest { enabled ->
+                        if (enabled) viewModel.feedback.collectLatest { scanSound.play(it) }
+                        else scanSound.stop()
+                    }
+            }
+        }
         setContent {
             val state by viewModel.state.collectAsStateWithLifecycle()
             val dark =
@@ -52,7 +71,12 @@ class MainActivity : AppCompatActivity() {
                 nfc.enableReaderMode(
                     this,
                     { viewModel.read(it) },
-                    NfcAdapter.FLAG_READER_NFC_F or NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK,
+                    NfcAdapter.FLAG_READER_NFC_A or
+                        NfcAdapter.FLAG_READER_NFC_B or
+                        NfcAdapter.FLAG_READER_NFC_F or
+                        NfcAdapter.FLAG_READER_NFC_V or
+                        NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK or
+                        NfcAdapter.FLAG_READER_NO_PLATFORM_SOUNDS,
                     Bundle().apply { putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 250) },
                 )
             }
@@ -62,6 +86,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         runCatching { adapter?.disableReaderMode(this) }
+        scanSound.stop()
         super.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        scanSound.close()
     }
 }

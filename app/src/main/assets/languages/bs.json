@@ -71,5 +71,8 @@
   "storage_error": "Podatke kartice nije moguće sačuvati ili učitati. Pokušajte ponovo.",
   "image_error": "Sliku nije moguće otvoriti. Odaberite drugu fotografiju.",
   "unknown_station": "Nepoznata stanica",
-  "bus": "Vožnja autobusom"
+  "bus": "Vožnja autobusom",
+  "scan_feedback": "Obavijesti o čitanju",
+  "scan_sound": "Zvukovi čitanja",
+  "scan_sound_hint": "Dva kratka tona za uspjeh; jedan dugi za neuspjeh"
 }

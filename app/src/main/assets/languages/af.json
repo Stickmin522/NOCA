@@ -71,5 +71,8 @@
   "storage_error": "Kon nie kaartdata stoor of laai nie. Probeer weer.",
   "image_error": "Kon nie hierdie prent oopmaak nie. Kies ’n ander foto.",
   "unknown_station": "Onbekende stasie",
-  "bus": "Busrit"
+  "bus": "Busrit",
+  "scan_feedback": "Skandeerterugvoer",
+  "scan_sound": "Skandeerklanke",
+  "scan_sound_hint": "Twee kort pieptone by sukses; een lang pieptoon by mislukking"
 }

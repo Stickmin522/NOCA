@@ -71,5 +71,8 @@
   "storage_error": "Kaardiandmeid ei saanud salvestada või laadida. Proovi uuesti.",
   "image_error": "Pilti ei saanud avada. Vali teine foto.",
   "unknown_station": "Tundmatu jaam",
-  "bus": "Bussisõit"
+  "bus": "Bussisõit",
+  "scan_feedback": "Lugemise tagasiside",
+  "scan_sound": "Lugemishelid",
+  "scan_sound_hint": "Õnnestumisel kaks lühikest piiksu; ebaõnnestumisel üks pikk"
 }

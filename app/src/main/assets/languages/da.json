@@ -71,5 +71,8 @@
   "storage_error": "Kortdata kunne ikke gemmes eller indlæses. Prøv igen.",
   "image_error": "Billedet kunne ikke åbnes. Vælg et andet foto.",
   "unknown_station": "Ukendt station",
-  "bus": "Busrejse"
+  "bus": "Busrejse",
+  "scan_feedback": "Feedback ved læsning",
+  "scan_sound": "Lyde ved læsning",
+  "scan_sound_hint": "To korte bip ved succes; ét langt bip ved fejl"
 }

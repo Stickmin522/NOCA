@@ -71,5 +71,8 @@
   "storage_error": "Non se puideron gardar ou cargar os datos. Téntao de novo.",
   "image_error": "Non se puido abrir a imaxe. Escolle outra foto.",
   "unknown_station": "Estación descoñecida",
-  "bus": "Traxecto en autobús"
+  "bus": "Traxecto en autobús",
+  "scan_feedback": "Avisos de lectura",
+  "scan_sound": "Sons de lectura",
+  "scan_sound_hint": "Dous pitidos curtos ao ler; un longo se falla"
 }

@@ -71,5 +71,8 @@
   "storage_error": "Ma setgħetx tiġi ssejvjata jew mgħobbija d-data tal-karta. Erġa’ pprova.",
   "image_error": "Ma setgħetx tinfetaħ din l-immaġni. Agħżel ritratt ieħor.",
   "unknown_station": "Stazzjon mhux magħruf",
-  "bus": "Vjaġġ bil-karozza tal-linja"
+  "bus": "Vjaġġ bil-karozza tal-linja",
+  "scan_feedback": "Avviżi tal-qari",
+  "scan_sound": "Ħsejjes tal-qari",
+  "scan_sound_hint": "Żewġ ħsejjes qosra meta jirnexxi; ħoss twil meta jfalli"
 }
