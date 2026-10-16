@@ -69,5 +69,7 @@
   "delete": "刪除",
   "choose_photo": "選擇照片",
   "storage_error": "無法儲存或載入卡片資料，請重試。",
-  "image_error": "無法開啟這張圖片，請選擇其他照片。"
+  "image_error": "無法開啟這張圖片，請選擇其他照片。",
+  "unknown_station": "未知車站",
+  "bus": "巴士乘車"
 }

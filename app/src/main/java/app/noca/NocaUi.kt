@@ -26,6 +26,7 @@ import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.outlined.ReceiptLong
 import androidx.compose.material.icons.outlined.*
@@ -46,6 +47,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -81,7 +83,8 @@ private fun timestamp(time: Long): String =
 
 private fun transactionDate(value: String): String = runCatching {
     LocalDate.parse(value).format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
-}.getOrDefault(value)
+}
+    .getOrDefault(value)
 
 private class TicketShape : Shape {
     override fun createOutline(
@@ -142,6 +145,11 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
     val selectedCard = state.cards.firstOrNull { it.id == selected }
     val currentSaved = state.cards.firstOrNull { it.id == state.current?.id }
     val haptic = LocalHapticFeedback.current
+    val rescan = {
+        vm.rescan()
+        selected = null
+        page = Page.SCAN
+    }
     LaunchedEffect(selected, state.cards, state.current?.readAt) {
         savedSnapshot = null
         historyError = false
@@ -182,7 +190,7 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                     }
                 else
                     Icon(
-                        Icons.Outlined.Nfc,
+                        NocaIcons.Contactless,
                         null,
                         tint = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier.size(30.dp),
@@ -222,7 +230,7 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                     Row(Modifier.padding(6.dp)) {
                         val nav =
                             listOf(
-                                Triple(Page.SCAN, "scan", Icons.Outlined.Nfc),
+                                Triple(Page.SCAN, "scan", NocaIcons.Contactless),
                                 Triple(Page.WALLET, "wallet", Icons.Outlined.Wallet),
                                 Triple(Page.SETTINGS, "settings", Icons.Outlined.Settings),
                             )
@@ -280,22 +288,22 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                     )
                     CardArt(
                         selectedCard.art,
-                        Modifier.width(200.dp).align(Alignment.CenterHorizontally),
+                        Modifier.widthIn(max = 300.dp)
+                            .fillMaxWidth()
+                            .align(Alignment.CenterHorizontally),
                     )
                     BalanceTicket(
                         selectedCard.balance,
                         t["last_read"] + " " + timestamp(selectedCard.readAt),
                         false,
+                        rescan,
                     )
                     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         FilledTonalButton(
-                            onClick = {
-                                selected = null
-                                page = Page.SCAN
-                            },
+                            onClick = rescan,
                             modifier = Modifier.weight(1f),
                         ) {
-                            Icon(Icons.Outlined.Nfc, null, Modifier.size(18.dp))
+                            Icon(NocaIcons.Contactless, null, Modifier.size(18.dp))
                             Spacer(Modifier.width(7.dp))
                             Text(t["rescan"])
                         }
@@ -354,7 +362,7 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                                         Modifier.padding(22.dp),
                                         verticalArrangement = Arrangement.spacedBy(10.dp),
                                     ) {
-                                        Icon(Icons.Outlined.Nfc, null)
+                                        Icon(NocaIcons.Contactless, null)
                                         Text(
                                             t[if (!state.nfcAvailable) "nfc_missing" else "nfc_off"]
                                         )
@@ -373,6 +381,7 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
                                         snapshot.balance,
                                         t["last_read"] + " " + timestamp(snapshot.readAt),
                                         state.reading,
+                                        rescan,
                                     )
                             }
                             if (state.current != null) {
@@ -519,64 +528,76 @@ fun NocaUi(state: UiState, vm: NocaViewModel, openNfc: () -> Unit) {
 private fun WaitingPanel(reading: Boolean) {
     val t = texts()
     val c = LocalNocaColors.current
-    Surface(
-        shape =
-            RoundedCornerShape(
-                topStart = 38.dp,
-                topEnd = 82.dp,
-                bottomEnd = 38.dp,
-                bottomStart = 38.dp,
-            ),
-        color = c.accent,
-        modifier = Modifier.fillMaxWidth().heightIn(min = 246.dp),
-    ) {
-        Column(
-            Modifier.padding(26.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(14.dp),
+    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+        Surface(
+            shape = MaterialShapes.Cookie9Sided.toShape(),
+            color = c.accent,
+            modifier = Modifier.widthIn(max = 300.dp).fillMaxWidth().aspectRatio(1f),
         ) {
-            Surface(
-                shape = RoundedCornerShape(30.dp),
-                color = lerp(c.accent, Color.White, .2f),
-                shadowElevation = 6.dp,
+            Column(
+                Modifier.padding(horizontal = 44.dp, vertical = 36.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
             ) {
-                Box(Modifier.size(90.dp), contentAlignment = Alignment.Center) {
-                    Icon(Icons.Outlined.Nfc, null, tint = c.ink, modifier = Modifier.size(43.dp))
-                }
-            }
-            if (reading)
-                LinearProgressIndicator(
-                    Modifier.width(110.dp),
+                AnimatedContactlessIcon(color = c.ink)
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    t[if (reading) "reading" else "waiting"],
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
                     color = c.ink,
-                    trackColor = c.ink.copy(alpha = .1f),
+                    textAlign = TextAlign.Center,
                 )
-            else Text(t["nfc_ready"], style = MaterialTheme.typography.labelMedium, color = c.ink)
-            Text(
-                t[if (reading) "reading" else "waiting"],
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.SemiBold,
-                color = c.ink,
-                textAlign = TextAlign.Center,
-            )
+                Spacer(Modifier.height(10.dp))
+                if (reading)
+                    LinearProgressIndicator(
+                        Modifier.width(100.dp),
+                        color = c.ink,
+                        trackColor = c.ink.copy(alpha = .1f),
+                    )
+                else
+                    Text(
+                        t["nfc_ready"],
+                        style = MaterialTheme.typography.labelMedium,
+                        color = c.ink,
+                    )
+            }
         }
     }
 }
 
 @Composable
-private fun BalanceTicket(balance: Int, caption: String, reading: Boolean) {
+private fun BalanceTicket(balance: Int, caption: String, reading: Boolean, onRescan: () -> Unit) {
     val t = texts()
     val c = LocalNocaColors.current
     val shape = remember { TicketShape() }
     Surface(
         shape = shape,
         color = c.accent,
-        modifier = Modifier.fillMaxWidth().heightIn(min = 222.dp),
+        modifier =
+            Modifier.fillMaxWidth()
+                .heightIn(min = 222.dp)
+                .clip(shape)
+                .clickable(role = Role.Button, onClickLabel = t["rescan"], onClick = onRescan),
     ) {
         Column(
             Modifier.padding(horizontal = 26.dp, vertical = 25.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text(t["balance"], style = MaterialTheme.typography.labelLarge, color = c.ink)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    t["balance"],
+                    style = MaterialTheme.typography.labelLarge,
+                    color = c.ink,
+                    modifier = Modifier.weight(1f),
+                )
+                Icon(
+                    Icons.Outlined.Refresh,
+                    t["rescan"],
+                    tint = c.ink,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
             BasicText(
                 yen(balance),
                 modifier = Modifier.fillMaxWidth(),
@@ -652,60 +673,84 @@ private fun EmptyState(icon: ImageVector, title: String, subtitle: String? = nul
 @Composable
 private fun History(history: List<Transaction>, title: String) {
     val t = texts()
+    val stations = stationNames()
     Column(verticalArrangement = Arrangement.spacedBy(11.dp)) {
         Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
         if (history.isEmpty()) EmptyState(Icons.Outlined.History, t["empty_history"])
         else {
             SoftPanel(Modifier.fillMaxWidth()) {
                 history.forEachIndexed { index, item ->
+                    val journey = stations.journey(item)
                     val icon =
-                        when (item.kind) {
-                            "transit" -> Icons.Outlined.Train
-                            "topup" -> Icons.Outlined.AddCircleOutline
-                            "purchase" -> Icons.Outlined.ShoppingBag
+                        when {
+                            item.kind == "topup" -> Icons.Outlined.AddCircleOutline
+                            item.kind == "purchase" -> Icons.Outlined.ShoppingBag
+                            item.isBus -> Icons.Outlined.DirectionsBus
+                            journey != null || item.kind == "transit" -> Icons.Outlined.Train
                             else -> Icons.AutoMirrored.Outlined.ReceiptLong
                         }
                     val kind =
-                        when (item.kind) {
-                            "transit" -> "train"
-                            "topup" -> "topup"
-                            "purchase" -> "purchase"
+                        when {
+                            item.kind == "topup" -> "topup"
+                            item.kind == "purchase" -> "purchase"
+                            item.isBus -> "bus"
+                            journey != null || item.kind == "transit" -> "train"
                             else -> "other"
                         }
-                    Row(
+                    Column(
                         Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 14.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
-                        Surface(
-                            shape = RoundedCornerShape(14.dp),
-                            color = MaterialTheme.colorScheme.surface,
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
                         ) {
-                            Box(Modifier.size(38.dp), contentAlignment = Alignment.Center) {
-                                Icon(icon, null, Modifier.size(21.dp))
+                            Surface(
+                                shape = RoundedCornerShape(14.dp),
+                                color = MaterialTheme.colorScheme.surface,
+                            ) {
+                                Box(Modifier.size(38.dp), contentAlignment = Alignment.Center) {
+                                    Icon(icon, null, Modifier.size(21.dp))
+                                }
                             }
-                        }
-                        Column(
-                            Modifier.weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(3.dp),
-                        ) {
-                            Text(t[kind], style = MaterialTheme.typography.bodyLarge)
                             Text(
-                                transactionDate(item.date),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                t[kind],
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.weight(1f),
                             )
-                        }
-                        Column(
-                            horizontalAlignment = Alignment.End,
-                            verticalArrangement = Arrangement.spacedBy(3.dp),
-                        ) {
                             Text(
                                 item.delta?.let {
                                     (if (it > 0) "+" else if (it < 0) "−" else "") +
                                         yen(kotlin.math.abs(it))
                                 } ?: "—",
                                 style = MaterialTheme.typography.titleMedium,
+                            )
+                        }
+                        if (journey != null) {
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            ) {
+                                JourneyStation(journey.from, Modifier.weight(1f))
+                                Icon(
+                                    Icons.AutoMirrored.Outlined.ArrowForward,
+                                    null,
+                                    Modifier.size(20.dp),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                                JourneyStation(journey.to, Modifier.weight(1f))
+                            }
+                        }
+                        Row(
+                            Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        ) {
+                            Text(
+                                transactionDate(item.date),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.weight(1f),
                             )
                             Text(
                                 t["balance"] + " " + yen(item.balance),
@@ -732,6 +777,25 @@ private fun History(history: List<Transaction>, title: String) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
+    }
+}
+
+@Composable
+private fun JourneyStation(stop: JourneyStop, modifier: Modifier = Modifier) {
+    val t = texts()
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text(
+            stop.name?.name ?: t["unknown_station"],
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold,
+        )
+        Text(
+            stop.name?.let {
+                listOf(it.operator, it.line).filter { name -> name != "-" }.joinToString(" · ")
+            } ?: stop.code,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 

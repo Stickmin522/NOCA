@@ -69,5 +69,7 @@
   "delete": "Izbriši",
   "choose_photo": "Odaberi fotografiju",
   "storage_error": "Podatke kartice nije moguće spremiti ili učitati. Pokušajte ponovno.",
-  "image_error": "Sliku nije moguće otvoriti. Odaberite drugu fotografiju."
+  "image_error": "Sliku nije moguće otvoriti. Odaberite drugu fotografiju.",
+  "unknown_station": "Nepoznata stanica",
+  "bus": "Vožnja autobusom"
 }

@@ -15,7 +15,13 @@
     "id": "pasmo",
     "name": "PASMO",
     "file": "pasmo.webp",
-    "source": "https://www.pasmo.co.jp/ic-card/buy/type/"
+    "source": "https://www.pasmo.co.jp/ic-card/buy/type/",
+    "crop": [
+      162,
+      98,
+      836,
+      528
+    ]
   },
   {
     "id": "icoca",

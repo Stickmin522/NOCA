@@ -69,5 +69,7 @@
   "delete": "Kustuta",
   "choose_photo": "Vali foto",
   "storage_error": "Kaardiandmeid ei saanud salvestada või laadida. Proovi uuesti.",
-  "image_error": "Pilti ei saanud avada. Vali teine foto."
+  "image_error": "Pilti ei saanud avada. Vali teine foto.",
+  "unknown_station": "Tundmatu jaam",
+  "bus": "Bussisõit"
 }

@@ -69,5 +69,7 @@
   "delete": "Supprimer",
   "choose_photo": "Choisir une photo",
   "storage_error": "Impossible d’enregistrer ou de charger les données de la carte. Réessayez.",
-  "image_error": "Impossible d’ouvrir cette image. Choisissez une autre photo."
+  "image_error": "Impossible d’ouvrir cette image. Choisissez une autre photo.",
+  "unknown_station": "Gare inconnue",
+  "bus": "Trajet en bus"
 }

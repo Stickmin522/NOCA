@@ -69,5 +69,7 @@
   "delete": "Izbriši",
   "choose_photo": "Izberi fotografijo",
   "storage_error": "Podatkov kartice ni bilo mogoče shraniti ali naložiti. Poskusite znova.",
-  "image_error": "Slike ni bilo mogoče odpreti. Izberite drugo fotografijo."
+  "image_error": "Slike ni bilo mogoče odpreti. Izberite drugo fotografijo.",
+  "unknown_station": "Neznana postaja",
+  "bus": "Vožnja z avtobusom"
 }

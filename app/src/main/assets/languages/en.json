@@ -69,5 +69,7 @@
   "delete": "Delete",
   "choose_photo": "Choose a photo",
   "storage_error": "Could not save or load card data. Please try again.",
-  "image_error": "Could not open this image. Choose another photo."
+  "image_error": "Could not open this image. Choose another photo.",
+  "unknown_station": "Unknown station",
+  "bus": "Bus journey"
 }

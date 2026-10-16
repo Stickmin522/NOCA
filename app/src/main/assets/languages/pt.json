@@ -69,5 +69,7 @@
   "delete": "Eliminar",
   "choose_photo": "Escolher uma fotografia",
   "storage_error": "Não foi possível guardar ou carregar os dados do cartão. Tente novamente.",
-  "image_error": "Não foi possível abrir a imagem. Escolha outra fotografia."
+  "image_error": "Não foi possível abrir a imagem. Escolha outra fotografia.",
+  "unknown_station": "Estação desconhecida",
+  "bus": "Viagem de autocarro"
 }

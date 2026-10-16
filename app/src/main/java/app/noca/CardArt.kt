@@ -23,7 +23,6 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import java.io.File
 import kotlinx.coroutines.Dispatchers
@@ -103,14 +102,14 @@ fun CardArt(id: String, modifier: Modifier = Modifier) {
         Image(
             visibleBitmap,
             contentDescription = art?.name,
-            modifier = modifier.aspectRatio(1.586f).clip(RoundedCornerShape(9.dp)),
-            contentScale = ContentScale.Fit,
+            modifier = modifier.aspectRatio(1.586f).clip(RoundedCornerShape(percent = 6)),
+            contentScale = ContentScale.Crop,
         )
     else
         Box(
             modifier
                 .aspectRatio(1.586f)
-                .clip(RoundedCornerShape(9.dp))
+                .clip(RoundedCornerShape(percent = 6))
                 .background(
                     art?.color?.let { Color(it.toColorInt()) } ?: LocalNocaColors.current.accent
                 ),

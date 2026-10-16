@@ -69,5 +69,7 @@
   "delete": "Hapus",
   "choose_photo": "Pilih foto",
   "storage_error": "Tidak dapat menyimpan atau memuat data kartu. Coba lagi.",
-  "image_error": "Tidak dapat membuka gambar ini. Pilih foto lain."
+  "image_error": "Tidak dapat membuka gambar ini. Pilih foto lain.",
+  "unknown_station": "Stasiun tidak dikenal",
+  "bus": "Perjalanan bus"
 }

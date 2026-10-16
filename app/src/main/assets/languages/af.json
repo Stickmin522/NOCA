@@ -69,5 +69,7 @@
   "delete": "Vee uit",
   "choose_photo": "Kies ’n foto",
   "storage_error": "Kon nie kaartdata stoor of laai nie. Probeer weer.",
-  "image_error": "Kon nie hierdie prent oopmaak nie. Kies ’n ander foto."
+  "image_error": "Kon nie hierdie prent oopmaak nie. Kies ’n ander foto.",
+  "unknown_station": "Onbekende stasie",
+  "bus": "Busrit"
 }

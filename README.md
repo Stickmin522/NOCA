@@ -7,12 +7,14 @@ An offline NFC reader for Japanese transit IC cards, built with Rust and Jetpack
 ## Features
 
 - Read the balance and recent transactions from compatible FeliCa transit cards.
+- See entry and exit stations and their lines for rail journeys, using a bundled offline station directory.
 - Remember cards with a name and artwork; scan them again to update their balance and history.
 - Keep previously read transactions on your device, even after they leave the card's history.
 - Choose a card design or import your own photo. Delete saved cards and their history at any time.
 - Material 3 Expressive interface, ticket-shaped balance cards, and soft shadows.
 - Lime, Mist Blue, and Coral themes with light, dark, and system modes.
 - System fonts, automatic language selection, and a searchable language picker.
+- Tap the balance to return to the animated contactless reading prompt.
 
 Language selection follows the device's preferences, with English as a fallback when a translation is unavailable.
 
@@ -21,6 +23,8 @@ Language selection follows the device's preferences, with English as a fallback 
 Install the **arm64-v8a APK** on an NFC-F-capable phone running **Android 10 or later**. Enable NFC, open NOCA, and hold one transit card against the phone's NFC antenna. Choose **Remember this card** to add it to your wallet.
 
 The available history depends on the card. Transaction amounts are calculated only when consecutive records establish a balance change. NOCA reads card data; it does not top up cards or replace a physical transit pass.
+
+Station names are shown in Japanese. Unknown station codes remain visible without guessing a name; bus records do not use the rail station directory.
 
 ## Privacy
 
@@ -39,6 +43,7 @@ cargo test --manifest-path native/rust/Cargo.toml --locked
 Release builds are unsigned unless `NOCA_KEYSTORE_PATH`, `NOCA_KEYSTORE_PASSWORD`, `NOCA_KEY_ALIAS`, and `NOCA_KEY_PASSWORD` are provided. Keep signing files and passwords outside the repository.
 
 The source code is licensed under [MIT](LICENSE). Card images and issuer trademarks belong to their respective owners; see [artwork credits](docs/ASSETS.md).
+The bundled station directory is also MIT-licensed; see [station data](docs/STATIONS.md).
 
 ## 中文
 

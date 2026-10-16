@@ -69,5 +69,7 @@
   "delete": "Eyða",
   "choose_photo": "Velja mynd",
   "storage_error": "Ekki tókst að vista eða hlaða kortagögnum. Reyndu aftur.",
-  "image_error": "Ekki tókst að opna myndina. Veldu aðra mynd."
+  "image_error": "Ekki tókst að opna myndina. Veldu aðra mynd.",
+  "unknown_station": "Óþekkt stöð",
+  "bus": "Strætóferð"
 }

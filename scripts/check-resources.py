@@ -2,6 +2,7 @@
 """Check language registration, translations, and bundled artwork references."""
 
 import json
+import csv
 import pathlib
 import xml.etree.ElementTree as ET
 
@@ -35,4 +36,16 @@ for art in artworks:
         assert len(art["crop"]) == 4 and all(isinstance(n, int) for n in art["crop"])
         assert min(art["crop"]) >= 0 and min(art["crop"][2:]) > 0
 
-print(f"Checked {len(files)} languages and {len(artworks)} artwork entries.")
+with (assets / "stations/stations.tsv").open(encoding="utf-8", newline="") as stream:
+    stations = list(csv.DictReader(stream, delimiter="\t"))
+keys = set()
+for station in stations:
+    key = tuple(int(station[column]) for column in ("area", "line", "station"))
+    assert key[0] in range(4) and all(n in range(256) for n in key[1:]), key
+    assert key not in keys, f"Duplicate station code: {key}"
+    keys.add(key)
+    assert all(station[column].strip() for column in ("operator", "line_name", "station_name"))
+assert len(stations) == 6954, "Station directory is incomplete"
+assert (assets / "stations/LICENSE.txt").is_file(), "Missing station data license"
+
+print(f"Checked {len(files)} languages, {len(artworks)} artwork entries, and {len(stations)} station codes.")

@@ -69,5 +69,7 @@
   "delete": "Tanggalin",
   "choose_photo": "Pumili ng larawan",
   "storage_error": "Hindi ma-save o ma-load ang data ng card. Subukan muli.",
-  "image_error": "Hindi mabuksan ang larawang ito. Pumili ng iba."
+  "image_error": "Hindi mabuksan ang larawang ito. Pumili ng iba.",
+  "unknown_station": "Hindi kilalang istasyon",
+  "bus": "Biyahe sa bus"
 }

@@ -7,5 +7,4 @@
         <item name="android:windowBackground">#F4F6ED</item>
         <item name="android:colorAccent">#657E28</item>
     </style>
-    <color name="launcher_background">#D2ED7A</color>
 </resources>

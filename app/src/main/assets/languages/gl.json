@@ -69,5 +69,7 @@
   "delete": "Eliminar",
   "choose_photo": "Escoller unha foto",
   "storage_error": "Non se puideron gardar ou cargar os datos. Téntao de novo.",
-  "image_error": "Non se puido abrir a imaxe. Escolle outra foto."
+  "image_error": "Non se puido abrir a imaxe. Escolle outra foto.",
+  "unknown_station": "Estación descoñecida",
+  "bus": "Traxecto en autobús"
 }

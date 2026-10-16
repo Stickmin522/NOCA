@@ -69,5 +69,7 @@
   "delete": "Smazat",
   "choose_photo": "Vybrat fotografii",
   "storage_error": "Data karty se nepodařilo uložit nebo načíst. Zkuste to znovu.",
-  "image_error": "Obrázek nelze otevřít. Vyberte jinou fotografii."
+  "image_error": "Obrázek nelze otevřít. Vyberte jinou fotografii.",
+  "unknown_station": "Neznámá stanice",
+  "bus": "Cesta autobusem"
 }

@@ -69,5 +69,7 @@
   "delete": "Sil",
   "choose_photo": "Şəkil seç",
   "storage_error": "Kart məlumatları saxlanıla və ya yüklənə bilmədi. Yenidən cəhd edin.",
-  "image_error": "Şəkil açıla bilmədi. Başqa şəkil seçin."
+  "image_error": "Şəkil açıla bilmədi. Başqa şəkil seçin.",
+  "unknown_station": "Naməlum stansiya",
+  "bus": "Avtobus səfəri"
 }

@@ -69,5 +69,7 @@
   "delete": "Löschen",
   "choose_photo": "Foto auswählen",
   "storage_error": "Kartendaten konnten nicht gespeichert oder geladen werden. Bitte erneut versuchen.",
-  "image_error": "Dieses Bild konnte nicht geöffnet werden. Bitte ein anderes Foto auswählen."
+  "image_error": "Dieses Bild konnte nicht geöffnet werden. Bitte ein anderes Foto auswählen.",
+  "unknown_station": "Unbekannter Bahnhof",
+  "bus": "Busfahrt"
 }

@@ -69,5 +69,7 @@
   "delete": "Elimina",
   "choose_photo": "Tria una foto",
   "storage_error": "No s’han pogut desar o carregar les dades. Torna-ho a provar.",
-  "image_error": "No s’ha pogut obrir la imatge. Tria una altra foto."
+  "image_error": "No s’ha pogut obrir la imatge. Tria una altra foto.",
+  "unknown_station": "Estació desconeguda",
+  "bus": "Trajecte en autobús"
 }

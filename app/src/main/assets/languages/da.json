@@ -69,5 +69,7 @@
   "delete": "Slet",
   "choose_photo": "Vælg et foto",
   "storage_error": "Kortdata kunne ikke gemmes eller indlæses. Prøv igen.",
-  "image_error": "Billedet kunne ikke åbnes. Vælg et andet foto."
+  "image_error": "Billedet kunne ikke åbnes. Vælg et andet foto.",
+  "unknown_station": "Ukendt station",
+  "bus": "Busrejse"
 }

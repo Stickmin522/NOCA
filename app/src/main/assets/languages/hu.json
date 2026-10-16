@@ -69,5 +69,7 @@
   "delete": "Törlés",
   "choose_photo": "Fénykép kiválasztása",
   "storage_error": "A kártyaadatok mentése vagy betöltése sikertelen. Próbálja újra.",
-  "image_error": "A kép nem nyitható meg. Válasszon másik fényképet."
+  "image_error": "A kép nem nyitható meg. Válasszon másik fényképet.",
+  "unknown_station": "Ismeretlen állomás",
+  "bus": "Buszos utazás"
 }

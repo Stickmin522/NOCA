@@ -69,5 +69,7 @@
   "delete": "Sil",
   "choose_photo": "Fotoğraf seç",
   "storage_error": "Kart verileri kaydedilemedi veya yüklenemedi. Tekrar deneyin.",
-  "image_error": "Bu görüntü açılamadı. Başka bir fotoğraf seçin."
+  "image_error": "Bu görüntü açılamadı. Başka bir fotoğraf seçin.",
+  "unknown_station": "Bilinmeyen istasyon",
+  "bus": "Otobüs yolculuğu"
 }

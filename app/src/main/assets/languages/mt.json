@@ -69,5 +69,7 @@
   "delete": "Ħassar",
   "choose_photo": "Agħżel ritratt",
   "storage_error": "Ma setgħetx tiġi ssejvjata jew mgħobbija d-data tal-karta. Erġa’ pprova.",
-  "image_error": "Ma setgħetx tinfetaħ din l-immaġni. Agħżel ritratt ieħor."
+  "image_error": "Ma setgħetx tinfetaħ din l-immaġni. Agħżel ritratt ieħor.",
+  "unknown_station": "Stazzjon mhux magħruf",
+  "bus": "Vjaġġ bil-karozza tal-linja"
 }

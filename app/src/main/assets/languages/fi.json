@@ -69,5 +69,7 @@
   "delete": "Poista",
   "choose_photo": "Valitse kuva",
   "storage_error": "Korttitietojen tallennus tai lataus epäonnistui. Yritä uudelleen.",
-  "image_error": "Kuvaa ei voitu avata. Valitse toinen kuva."
+  "image_error": "Kuvaa ei voitu avata. Valitse toinen kuva.",
+  "unknown_station": "Tuntematon asema",
+  "bus": "Bussimatka"
 }

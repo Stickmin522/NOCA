@@ -69,5 +69,7 @@
   "delete": "Ezabatu",
   "choose_photo": "Aukeratu argazkia",
   "storage_error": "Ezin izan dira txartelaren datuak gorde edo kargatu. Saiatu berriro.",
-  "image_error": "Ezin izan da irudia ireki. Aukeratu beste argazki bat."
+  "image_error": "Ezin izan da irudia ireki. Aukeratu beste argazki bat.",
+  "unknown_station": "Geltoki ezezaguna",
+  "bus": "Autobus-bidaia"
 }

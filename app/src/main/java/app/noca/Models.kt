@@ -17,6 +17,12 @@ data class Transaction(
     val outStation: Int,
     val region: Int,
 ) {
+    val terminal: Int
+        get() = raw.take(2).toIntOrNull(16) ?: -1
+
+    val isBus: Boolean
+        get() = terminal == 0x05 || (process and 0x7f) in setOf(0x0d, 0x0f, 0x1f, 0x23)
+
     fun toJson() =
         JSONObject()
             .put("raw", raw)

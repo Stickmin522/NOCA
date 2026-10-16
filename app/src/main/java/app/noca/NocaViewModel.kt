@@ -59,7 +59,11 @@ class NocaViewModel(app: Application) : AndroidViewModel(app) {
                 val snapshot = CardReader().read(tag)
                 val now = SystemClock.elapsedRealtime()
                 databaseLock.withLock {
-                    if (snapshot.id != lastId || now - lastReadAt > 1500) {
+                    if (
+                        snapshot.id != lastId ||
+                            now - lastReadAt > 1500 ||
+                            mutable.value.current == null
+                    ) {
                         val saved = repository.sync(snapshot)
                         mutable.update {
                             it.copy(
@@ -93,6 +97,10 @@ class NocaViewModel(app: Application) : AndroidViewModel(app) {
 
     fun dismissError() {
         mutable.update { it.copy(error = null) }
+    }
+
+    fun rescan() {
+        mutable.update { it.copy(current = null, error = null, syncNotice = false) }
     }
 
     fun remember(snapshot: CardSnapshot, name: String, art: String) = changeCards {

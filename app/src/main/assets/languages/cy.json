@@ -69,5 +69,7 @@
   "delete": "Dileu",
   "choose_photo": "Dewis llun",
   "storage_error": "Methu cadw neu lwytho data’r cerdyn. Rhowch gynnig arall arni.",
-  "image_error": "Methu agor y ddelwedd. Dewiswch lun arall."
+  "image_error": "Methu agor y ddelwedd. Dewiswch lun arall.",
+  "unknown_station": "Gorsaf anhysbys",
+  "bus": "Taith bws"
 }
