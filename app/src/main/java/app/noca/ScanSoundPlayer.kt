@@ -27,7 +27,7 @@ class ScanSoundPlayer : AutoCloseable {
                 AudioTrack.Builder()
                     .setAudioAttributes(
                         AudioAttributes.Builder()
-                            .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
                             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                             .build()
                     )
@@ -41,9 +41,10 @@ class ScanSoundPlayer : AutoCloseable {
                     .setBufferSizeInBytes(samples.size * Short.SIZE_BYTES)
                     .setTransferMode(AudioTrack.MODE_STATIC)
                     .build()
-            if (playing.state != AudioTrack.STATE_INITIALIZED) return
+            // Static tracks become initialized only after their first successful write.
+            if (playing.state == AudioTrack.STATE_UNINITIALIZED) return
             val written = playing.write(samples, 0, samples.size, AudioTrack.WRITE_BLOCKING)
-            if (written != samples.size) return
+            if (written != samples.size || playing.state != AudioTrack.STATE_INITIALIZED) return
             currentCoroutineContext().ensureActive()
             if (closed) return
             track = playing

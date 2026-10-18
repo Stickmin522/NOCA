@@ -16,7 +16,7 @@ An offline NFC reader for Japanese transit IC cards, built with Rust and Jetpack
 - Lime, Mist Blue, and Coral themes with light, dark, and system modes.
 - System fonts, automatic language selection, and a searchable language picker.
 - Tap the balance to return to the animated contactless reading prompt.
-- A full-turn reading animation leads into the balance. Optional gate-style sounds play two short beeps for success and the same tone held longer for failure.
+- A full-turn reading animation leads into the balance. Optional gate-style sounds use media volume, with two short beeps for success and the same tone held longer for failure.
 
 Language selection follows the device's preferences, with English as a fallback when a translation is unavailable.
 

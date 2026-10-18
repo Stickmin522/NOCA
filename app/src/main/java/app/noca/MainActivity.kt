@@ -1,6 +1,7 @@
 package app.noca
 
 import android.content.Intent
+import android.media.AudioManager
 import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.provider.Settings
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        volumeControlStream = AudioManager.STREAM_MUSIC
         enableEdgeToEdge()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {

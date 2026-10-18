@@ -22,7 +22,7 @@ android {
         applicationId = "app.noca"
         minSdk = 29
         targetSdk = 37
-        versionCode = 6
+        versionCode = 7
         versionName = "1.3.1"
         ndk { abiFilters += "arm64-v8a" }
         externalNativeBuild { cmake { arguments += "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON" } }
@@ -112,6 +112,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.17.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:5.20.0")
     testImplementation("org.json:json:20260814")
     testImplementation("org.xerial:sqlite-jdbc:3.50.3.0")
     testRuntimeOnly("org.slf4j:slf4j-nop:2.0.17")
