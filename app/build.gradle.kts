@@ -22,8 +22,8 @@ android {
         applicationId = "app.noca"
         minSdk = 29
         targetSdk = 37
-        versionCode = 4
-        versionName = "1.3.0"
+        versionCode = 5
+        versionName = "1.3.1"
         ndk { abiFilters += "arm64-v8a" }
         externalNativeBuild { cmake { arguments += "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON" } }
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

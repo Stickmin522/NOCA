@@ -11,7 +11,7 @@ An offline NFC reader for Japanese transit IC cards, built with Rust and Jetpack
 - Remember cards with a name and artwork; scan them again to update their balance and history.
 - Keep previously read transactions on your device, even after they leave the card's history.
 - Choose a card design or import your own photo. Delete saved cards and their history at any time.
-- High-resolution card illustrations with subtle material detail, thin edges, and soft shadows.
+- High-resolution card artwork with realistic printed plastic surfaces and physical card outlines.
 - Material 3 Expressive interface with raised buttons, press feedback, and ticket-shaped balances.
 - Lime, Mist Blue, and Coral themes with light, dark, and system modes.
 - System fonts, automatic language selection, and a searchable language picker.

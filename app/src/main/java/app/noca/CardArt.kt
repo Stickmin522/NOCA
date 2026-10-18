@@ -20,16 +20,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.PathOperation
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -82,22 +78,28 @@ private class TransitCardShape(private val notched: Boolean) : Shape {
         val w = size.width
         val h = size.height
         val radius = h * (3.18f / 53.98f)
-        val card =
+        val depth = w * (1.20f / 85.60f)
+        val edge =
             Path().apply {
-                addRoundRect(RoundRect(Rect(Offset.Zero, size), CornerRadius(radius)))
-            }
-        if (!notched) return Outline.Generic(card)
-        // The shallow orientation cut follows the lower right edge of the physical card.
-        val cut =
-            Path().apply {
-                moveTo(w + 1f, h * .68f)
-                lineTo(w, h * .68f)
-                cubicTo(w, h * .715f, w * .986f, h * .72f, w * .986f, h * .745f)
-                cubicTo(w * .986f, h * .80f, w, h * .90f, w, h * .94f)
-                lineTo(w + 1f, h * .94f)
+                moveTo(radius, 0f)
+                lineTo(w - radius, 0f)
+                arcTo(Rect(w - radius * 2f, 0f, w, radius * 2f), -90f, 90f, false)
+                if (notched) {
+                    // The orientation notch belongs to the plastic outline, not the printed face.
+                    // Keep it on the physical right edge in either interface reading direction.
+                    lineTo(w, h * .68f)
+                    cubicTo(w, h * .712f, w - depth, h * .72f, w - depth, h * .745f)
+                    cubicTo(w - depth, h * .80f, w, h * .90f, w, h * .94f)
+                }
+                lineTo(w, h - radius)
+                arcTo(Rect(w - radius * 2f, h - radius * 2f, w, h), 0f, 90f, false)
+                lineTo(radius, h)
+                arcTo(Rect(0f, h - radius * 2f, radius * 2f, h), 90f, 90f, false)
+                lineTo(0f, radius)
+                arcTo(Rect(0f, 0f, radius * 2f, radius * 2f), 180f, 90f, false)
                 close()
             }
-        return Outline.Generic(Path.combine(PathOperation.Difference, card, cut))
+        return Outline.Generic(edge)
     }
 }
 
@@ -111,6 +113,7 @@ fun artworks(context: Context): List<CardArtwork> {
 fun CardArt(id: String, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val art = remember(context, id) { artworks(context).firstOrNull { it.id == id } }
+    val preset = art?.file != null
     var targetWidth by remember { mutableIntStateOf(0) }
     val shape = remember(art?.notched) { TransitCardShape(art?.notched == true) }
     val display =
@@ -118,13 +121,12 @@ fun CardArt(id: String, modifier: Modifier = Modifier) {
             .aspectRatio(CARD_ASPECT_RATIO)
             .onSizeChanged { targetWidth = it.width }
             .shadow(
-                6.dp,
+                2.dp,
                 shape,
                 clip = false,
-                ambientColor = Color.Black.copy(alpha = .10f),
-                spotColor = Color.Black.copy(alpha = .16f),
+                ambientColor = Color.Black.copy(alpha = .08f),
+                spotColor = Color.Black.copy(alpha = .14f),
             )
-            .clip(shape)
     val bitmap by
         produceState<ImageBitmap?>(null, context, id, targetWidth) {
             value = null
@@ -142,14 +144,16 @@ fun CardArt(id: String, modifier: Modifier = Modifier) {
         Image(
             visibleBitmap,
             contentDescription = art?.name,
-            modifier = display.background(Color.White),
-            contentScale = if (art != null) ContentScale.FillBounds else ContentScale.Crop,
+            modifier = if (preset) display else display.clip(shape),
+            contentScale = if (preset) ContentScale.Fit else ContentScale.Crop,
         )
     else
         Box(
-            display.background(
-                art?.color?.let { Color(it.toColorInt()) } ?: LocalNocaColors.current.accent
-            ),
+            display
+                .clip(shape)
+                .background(
+                    art?.color?.let { Color(it.toColorInt()) } ?: LocalNocaColors.current.accent
+                ),
             contentAlignment = Alignment.Center,
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {

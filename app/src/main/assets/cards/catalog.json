@@ -2,8 +2,15 @@
   {
     "id": "generic",
     "name": "NOCA",
-    "file": null,
-    "source": null
+    "file": "generic.webp",
+    "source": null,
+    "crop": [
+      5,
+      1,
+      1568,
+      993
+    ],
+    "notched": true
   },
   {
     "id": "suica",
@@ -11,10 +18,10 @@
     "file": "suica.webp",
     "source": "https://www.jreast.co.jp/suica/ic/whats/service.html/",
     "crop": [
-      0,
-      0,
-      1577,
-      997
+      9,
+      4,
+      1564,
+      987
     ],
     "notched": true
   },
@@ -24,10 +31,10 @@
     "file": "pasmo.webp",
     "source": "https://www.pasmo.co.jp/ic-card/buy/type/",
     "crop": [
-      45,
-      39,
-      1490,
-      907
+      6,
+      3,
+      1570,
+      988
     ],
     "notched": true
   },
@@ -37,11 +44,12 @@
     "file": "icoca.webp",
     "source": "https://www.jr-odekake.net/icoca/about/",
     "crop": [
-      13,
-      27,
-      1556,
-      942
-    ]
+      10,
+      3,
+      1562,
+      983
+    ],
+    "notched": true
   },
   {
     "id": "kitaca",
@@ -49,11 +57,12 @@
     "file": "kitaca.webp",
     "source": "https://www.jrhokkaido.co.jp/kitaca/01about.html",
     "crop": [
-      0,
-      3,
-      1579,
-      990
-    ]
+      9,
+      4,
+      1567,
+      984
+    ],
+    "notched": true
   },
   {
     "id": "toica",
@@ -61,10 +70,10 @@
     "file": "toica.webp",
     "source": "https://toica.jr-central.co.jp/outline/type/index.html",
     "crop": [
-      8,
-      10,
-      1562,
-      975
+      6,
+      1,
+      1571,
+      991
     ],
     "notched": true
   },
@@ -74,11 +83,12 @@
     "file": "sugoca.webp",
     "source": "https://www.jrkyushu.co.jp/sugoca/about/kinds/",
     "crop": [
-      35,
-      42,
-      1509,
-      922
-    ]
+      8,
+      4,
+      1570,
+      983
+    ],
+    "notched": true
   },
   {
     "id": "nimoca",
@@ -86,11 +96,12 @@
     "file": "nimoca.webp",
     "source": "https://www.nimoca.jp/about/type",
     "crop": [
-      16,
-      17,
-      1549,
-      961
-    ]
+      4,
+      3,
+      1567,
+      991
+    ],
+    "notched": true
   },
   {
     "id": "pitapa",
@@ -98,11 +109,12 @@
     "file": "pitapa.webp",
     "source": "https://www.pitapa.com/",
     "crop": [
-      5,
-      1,
-      1570,
-      993
-    ]
+      4,
+      3,
+      1572,
+      989
+    ],
+    "notched": true
   },
   {
     "id": "manaca",
@@ -110,11 +122,12 @@
     "file": "manaca.webp",
     "source": "https://manaca.meitetsu.co.jp/",
     "crop": [
-      9,
-      5,
-      1562,
-      983
-    ]
+      10,
+      4,
+      1558,
+      979
+    ],
+    "notched": true
   },
   {
     "id": "hayakaken",
@@ -122,10 +135,11 @@
     "file": "hayakaken.webp",
     "source": "https://subway.city.fukuoka.lg.jp/",
     "crop": [
-      2,
       1,
+      0,
       1576,
-      994
-    ]
+      993
+    ],
+    "notched": true
   }
 ]

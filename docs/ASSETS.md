@@ -1,6 +1,6 @@
 # Artwork credits
 
-Transit-card names, logos, mascots, and designs belong to their respective issuers. The bundled high-resolution illustrations follow the issuer designs listed below, with subtle plastic shading and edge detail. NOCA is an independent application and is not affiliated with these issuers. The MIT license covers the application source code, not issuer trademarks or card designs.
+Transit-card names, logos, mascots, and designs belong to their respective issuers. The bundled high-resolution card artwork follows the issuer designs listed below, with flat printed graphics and subtle plastic surface detail. Preset images have transparent silhouettes with rounded corners and a right-edge orientation notch. NOCA is an independent application and is not affiliated with these issuers. The MIT license covers the application source code, not issuer trademarks or card designs.
 
 | Card | Source |
 | --- | --- |
