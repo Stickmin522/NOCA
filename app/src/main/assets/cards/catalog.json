@@ -122,10 +122,10 @@
     "file": "manaca.webp",
     "source": "https://manaca.meitetsu.co.jp/",
     "crop": [
-      10,
-      4,
-      1558,
-      979
+      9,
+      7,
+      1561,
+      978
     ],
     "notched": true
   },

@@ -22,7 +22,7 @@ android {
         applicationId = "app.noca"
         minSdk = 29
         targetSdk = 37
-        versionCode = 5
+        versionCode = 6
         versionName = "1.3.1"
         ndk { abiFilters += "arm64-v8a" }
         externalNativeBuild { cmake { arguments += "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON" } }
